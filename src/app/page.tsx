@@ -1,54 +1,45 @@
 "use client";
 
-import { motion, Variants, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, MotionValue } from "framer-motion";
 import React, { useState, useEffect, useRef } from "react";
 import { Cormorant_Garamond, Pinyon_Script } from "next/font/google";
 
 // ── Fonts ───────────────────────────────────────────
-// Premium luxury serif for headings
 const cormorant = Cormorant_Garamond({ 
   subsets: ["latin"], 
   weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"]
 });
 
-// Extremely elegant luxury script for names
 const pinyon = Pinyon_Script({ 
   weight: "400", 
   subsets: ["latin"] 
 });
 
+// ── Scroll-driven reveal helper ─────────────────────
+// Each child in a section gets a staggered slice of the parent's scroll progress.
+// As you scroll, elements animate in one-by-one.
+function useStaggeredScroll(
+  parentProgress: MotionValue<number>,
+  index: number,
+  total: number,
+  options?: { startOffset?: number; overlap?: number }
+) {
+  const startOffset = options?.startOffset ?? 0;       // where the first item starts revealing
+  const overlap = options?.overlap ?? 0.15;             // how much items overlap in their reveal
+  const availableRange = 1 - startOffset;
+  const sliceSize = availableRange / total;
+  const start = startOffset + index * sliceSize;
+  const end = Math.min(start + sliceSize + overlap, 1);
 
-// ── Animation Variants ──────────────────────────────
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 },
-  }),
-};
+  const opacity = useTransform(parentProgress, [start, start + (end - start) * 0.4], [0, 1]);
+  const y = useTransform(parentProgress, [start, end], [50, 0]);
+  const x = useTransform(parentProgress, [start, end], [40, 0]);
+  const xReverse = useTransform(parentProgress, [start, end], [-40, 0]);
+  const scale = useTransform(parentProgress, [start, start + (end - start) * 0.6], [0.95, 1]);
 
-const fadeRight: Variants = {
-  hidden: { opacity: 0, x: -40 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 },
-  }),
-};
-
-const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: 40 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 },
-  }),
-};
-
-
-
+  return { opacity, y, x, xReverse, scale };
+}
 
 // ───────────────────────────────────────────────────────
 export default function EngagementInvite() {
@@ -57,11 +48,6 @@ export default function EngagementInvite() {
   const [rsvpGuests, setRsvpGuests] = useState("");
   const [rsvpNameError, setRsvpNameError] = useState(false);
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    guests: "",
-    dietary: "",
-  });
 
   const handleRsvpAttend = (choice: "yes" | "no") => {
     if (!rsvpName.trim()) {
@@ -88,10 +74,7 @@ export default function EngagementInvite() {
     isCompleted: false
   });
 
-
-
   useEffect(() => {
-    // Target date: July 19, 2026, 15:30:00 (India Standard Time = UTC + 5:30)
     const targetDate = new Date("2026-07-19T15:30:00+05:30").getTime();
 
     const updateTimer = () => {
@@ -118,43 +101,47 @@ export default function EngagementInvite() {
   const [showReminder, setShowReminder] = useState(false);
 
   useEffect(() => {
-    // Show after 2 seconds
     const showTimer = setTimeout(() => setShowReminder(true), 2000);
-    // Hide after 12 seconds total
     const hideTimer = setTimeout(() => setShowReminder(false), 12000);
-
     return () => {
       clearTimeout(showTimer);
       clearTimeout(hideTimer);
     };
   }, []);
 
-  // ── Section Refs for parallax ────────────────────────
+  // ── Section Refs ─────────────────────────────────────
   const heroRef = useRef<HTMLElement>(null);
   const countdownRef = useRef<HTMLElement>(null);
   const inviteRef = useRef<HTMLElement>(null);
   const rsvpRef = useRef<HTMLElement>(null);
 
-  // Hero parallax — content drifts up slowly as you scroll away
+  // ── Hero: drifts up as you scroll away ───────────────
   const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const heroY = useTransform(heroProgress, [0, 1], [0, -80]);
   const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0]);
 
-  // Countdown — rises up and fades in as it enters view
-  const { scrollYProgress: countdownProgress } = useScroll({ target: countdownRef, offset: ["start end", "end start"] });
-  const countdownY = useTransform(countdownProgress, [0, 0.4, 1], [60, 0, -40]);
-  const countdownOpacity = useTransform(countdownProgress, [0, 0.25, 0.8, 1], [0, 1, 1, 0]);
+  // ── Countdown: scroll-driven staggered reveal ───────
+  // "start end" = section top hits viewport bottom → "center center" = section center hits viewport center
+  const { scrollYProgress: cdProgress } = useScroll({ target: countdownRef, offset: ["start end", "center center"] });
+  // 3 items: countdown numbers, "Where is it?" heading, address + button
+  const cd0 = useStaggeredScroll(cdProgress, 0, 3, { startOffset: 0.05 });
+  const cd1 = useStaggeredScroll(cdProgress, 1, 3, { startOffset: 0.05 });
+  const cd2 = useStaggeredScroll(cdProgress, 2, 3, { startOffset: 0.05 });
 
-  // Invite section — text drifts from right, image from left
-  const { scrollYProgress: inviteProgress } = useScroll({ target: inviteRef, offset: ["start end", "end start"] });
-  const inviteTextX = useTransform(inviteProgress, [0, 0.4, 1], [50, 0, -20]);
-  const inviteImgX = useTransform(inviteProgress, [0, 0.4, 1], [-50, 0, 20]);
-  const inviteOpacity = useTransform(inviteProgress, [0, 0.2, 0.85, 1], [0, 1, 1, 0]);
+  // ── Invite: scroll-driven staggered reveal ──────────
+  const { scrollYProgress: invProgress } = useScroll({ target: inviteRef, offset: ["start end", "center center"] });
+  // 4 items: heading, para1, para2, para3, then image
+  const inv0 = useStaggeredScroll(invProgress, 0, 5, { startOffset: 0.0 });
+  const inv1 = useStaggeredScroll(invProgress, 1, 5, { startOffset: 0.0 });
+  const inv2 = useStaggeredScroll(invProgress, 2, 5, { startOffset: 0.0 });
+  const inv3 = useStaggeredScroll(invProgress, 3, 5, { startOffset: 0.0 });
+  const inv4 = useStaggeredScroll(invProgress, 4, 5, { startOffset: 0.0 });
 
-  // RSVP — rises gently into view, no fade out (stays visible)
+  // ── RSVP: scroll-driven staggered reveal ────────────
   const { scrollYProgress: rsvpProgress } = useScroll({ target: rsvpRef, offset: ["start end", "center center"] });
-  const rsvpY = useTransform(rsvpProgress, [0, 1], [80, 0]);
-  const rsvpOpacity = useTransform(rsvpProgress, [0, 0.4], [0, 1]);
+  const rsvp0 = useStaggeredScroll(rsvpProgress, 0, 3, { startOffset: 0.0 });
+  const rsvp1 = useStaggeredScroll(rsvpProgress, 1, 3, { startOffset: 0.0 });
+  const rsvp2 = useStaggeredScroll(rsvpProgress, 2, 3, { startOffset: 0.0 });
 
   return (
     <main className={`min-h-screen text-[#4A433E] ${cormorant.className} overflow-x-hidden selection:text-white relative`}>
@@ -183,19 +170,15 @@ export default function EngagementInvite() {
 
       {/* ═══ INDIAN THEMED BACKGROUNDS ═══ */}
       <img
-  src="/top_bg.PNG"
-  alt=""
-  className="absolute top-0 left-0 w-full h-auto pointer-events-none"
-/>
-
-{/* Bottom Background */}
-<img
-  src="/bottom_bg.PNG"
-  alt=""
-  className="absolute bottom-0 left-0 w-full h-auto pointer-events-none"
-/>
-
-      
+        src="/top_bg.PNG"
+        alt=""
+        className="absolute top-0 left-0 w-full h-auto pointer-events-none"
+      />
+      <img
+        src="/bottom_bg.PNG"
+        alt=""
+        className="absolute bottom-0 left-0 w-full h-auto pointer-events-none"
+      />
 
 
       {/* ═══ SECTION 1: HERO ═══ */}
@@ -211,61 +194,52 @@ export default function EngagementInvite() {
 
           <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center mt-4">
             
-            <motion.p initial="hidden" animate="visible" variants={fadeUp} custom={2} className={`text-[25px] mb-4 ${cormorant.className} font-medium`}>
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }} 
+              className={`text-[25px] mb-4 ${cormorant.className} font-medium`}
+            >
               With the blesses of our Families 
             </motion.p>
             
             <motion.h1 
-              initial="hidden" animate="visible" variants={fadeUp} custom={1} 
+              initial={{ opacity: 0, y: 30 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }} 
               className={`text-[48px] md:text-[96px] text-[#837834] leading-[1.0] mb-4 ${pinyon.className} relative z-20 py-4 px-2`}
             >
               Chhaya <span className={`text-[28px] sm:text-[42px] md:text-[54px] bg-clip-text mx-4 ${cormorant.className} font-light italic inline-block`}>&amp;</span> Dwij
             </motion.h1>
 
-            <motion.p initial="hidden" animate="visible" variants={fadeUp} custom={2} className={`text-[25px] mb-4 ${cormorant.className} font-medium`}>
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
+              className={`text-[25px] mb-4 ${cormorant.className} font-medium`}
+            >
               Are getting engaged On
             </motion.p>
-            <motion.p initial="hidden" animate="visible" variants={fadeUp} custom={2} className={`text-[35px] ${cormorant.className} font-semibold`}>
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }} 
+              className={`text-[35px] ${cormorant.className} font-semibold`}
+            >
               July 16th
             </motion.p>
-
-            {/*
-            <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={3} className="relative z-20 w-full max-w-[850px] aspect-[16/9] sm:aspect-[21/9] overflow-hidden flex items-center justify-center group">
-              <img 
-                src="/eng.jpg" 
-                alt="Chhaya &amp; Dwij Engagement" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter sepia-[12%] contrast-[95%] saturate-[90%]" 
-                style={{
-                  WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0.7) 65%, rgba(0,0,0,0) 98%)',
-                  maskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0.7) 65%, rgba(0,0,0,0) 98%)'
-                }}
-              />
-              <div 
-                className="absolute inset-0 bg-[#8C7A6B]/5 mix-blend-color-burn pointer-events-none z-20"
-                style={{
-                  WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0.7) 65%, rgba(0,0,0,0) 98%)',
-                  maskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0.7) 65%, rgba(0,0,0,0) 98%)'
-                }}
-              />
-            </motion.div>
-            */}
           </div>
         </motion.div>
       </section>
           
       {/* ═══ SECTION 2: COUNTDOWN TIMER ═══ */}
       <section ref={countdownRef} className="relative w-full py-16 md:py-24 z-10 px-6 flex justify-center items-center mb-100">
-        <motion.div style={{ y: countdownY, opacity: countdownOpacity }} className="w-full flex justify-center">
-          {/* Main Card Container */}
+        <div className="w-full flex justify-center">
           <div className="w-full max-w-[420px] flex flex-col">
-            
-            {/* Header Text Area */}
             <div className="pt-2 pb-8 px-4 flex flex-col items-center text-center">
               
-              
-              {/* Countdown Numbers Group */}
-              <div className="flex flex-col items-center w-full mb-16">
-                {/* Numbers Row */}
+              {/* Item 1: Countdown Numbers — fades up */}
+              <motion.div style={{ opacity: cd0.opacity, y: cd0.y, scale: cd0.scale }} className="flex flex-col items-center w-full mb-16">
                 <div className="flex items-center justify-between w-full max-w-[320px] text-black text-[38px] sm:text-[44px] font-normal tracking-wide font-serif">
                   <span className="w-16 text-center tabular-nums">{String(timeLeft.days).padStart(2, "0")}</span>
                   <span className="text-black select-none pb-2">:</span>
@@ -275,69 +249,89 @@ export default function EngagementInvite() {
                   <span className="text-black select-none pb-2">:</span>
                   <span className="w-12 text-center tabular-nums">{String(timeLeft.seconds).padStart(2, "0")}</span>
                 </div>
-                
-                {/* Labels Row */}
                 <div className="flex justify-between w-full max-w-[320px] text-[15px] font-light text-black px-1">
                   <span className="w-16 text-center">Days</span>
                   <span className="w-12 text-center">Hours</span>
                   <span className="w-12 text-center">Minutes</span>
                   <span className="w-12 text-center">Seconds</span>
                 </div>
-              </div>
+              </motion.div>
 
-              <div>
-                <motion.h1 initial="hidden" animate="visible" variants={fadeUp} custom={1} className={`text-[48px] text-black leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2`}>
+              {/* Item 2: "Where is it?" heading — fades up */}
+              <motion.div style={{ opacity: cd1.opacity, y: cd1.y, scale: cd1.scale }}>
+                <h1 className={`text-[48px] text-black leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2`}>
                   Where is it?
-                </motion.h1>
-                <motion.p initial="hidden" animate="visible" variants={fadeUp} custom={2} className={`text-[25px] ${cormorant.className} font-medium`}>
+                </h1>
+              </motion.div>
+
+              {/* Item 3: Address + Directions button — fades up */}
+              <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }}>
+                <p className={`text-[25px] ${cormorant.className} font-medium`}>
                   Beaumont Community Centre
-                </motion.p>
-                <motion.p initial="hidden" animate="visible" variants={fadeUp} custom={2} className={`text-[25px] mb-8 ${cormorant.className} font-medium`}>
+                </p>
+                <p className={`text-[25px] mb-8 ${cormorant.className} font-medium`}>
                   5204 50 Ave, Beaumont, AB T4X 1E3
-                </motion.p>
+                </p>
                 <motion.a
                   href="https://www.google.com/maps/search/?api=1&query=Beaumont+Community+Centre+5204+50+Ave+Beaumont+AB+T4X+1E3"
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeUp}
-                  custom={2}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   className={`block mt-10 text-center cursor-pointer text-[25px] bg-[#FCCBBF] ${cormorant.className} font-medium py-2 px-3 rounded-[10px] mx-20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:brightness-95 transition-all`}
                 >
                   Get Directions
                 </motion.a>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* ═══ SECTION 3: INVITE ═══ */}
       <section ref={inviteRef} className="relative w-full py-16 md:py-24 z-10 px-6 flex justify-center items-center mb-100">
-        <motion.div className="w-full flex justify-center">
+        <div className="w-full flex justify-center">
           <div className="w-1/2 flex flex-col">
 
-            {/* Text slides in from right */}
-            <motion.div style={{ x: inviteTextX, opacity: inviteOpacity }} className="pt-2 flex flex-col items-center text-center">
-              <h1 className={`w-full text-[48px] text-black leading-[1.0] ${pinyon.className} relative z-20 mb-4`}>
+            <div className="pt-2 flex flex-col items-center text-center">
+              {/* Item 1: Heading — slides in from right */}
+              <motion.h1 
+                style={{ opacity: inv0.opacity, x: inv0.x, scale: inv0.scale }} 
+                className={`w-full text-[48px] text-black leading-[1.0] ${pinyon.className} relative z-20 mb-4`}
+              >
                 Dear friends and family!
-              </h1>
-              <p className={`text-[25px] mb-2 ${cormorant.className} font-medium`}>
-                We are thrilled to announce a special event happening this summer our engagement!
-              </p>
-              <p className={`text-[25px] mb-2 ${cormorant.className} font-medium`}>
-                This day wouldn't be complete without our closest loved ones, so we warmly invite you to join us and celebrate this joyful occasion together.
-              </p>
-              <p className={`text-[25px] ${cormorant.className} font-medium`}>
-                We can't wait to share this memorable moment with you!
-              </p>
-            </motion.div>
+              </motion.h1>
 
-            {/* Image slides in from left */}
-            <motion.div style={{ x: inviteImgX, opacity: inviteOpacity }} className="w-1/2 mx-auto flex justify-center mt-20">
+              {/* Item 2: Para 1 — slides in from right */}
+              <motion.p 
+                style={{ opacity: inv1.opacity, x: inv1.x }} 
+                className={`text-[25px] mb-2 ${cormorant.className} font-medium`}
+              >
+                We are thrilled to announce a special event happening this summer our engagement!
+              </motion.p>
+
+              {/* Item 3: Para 2 — slides in from right */}
+              <motion.p 
+                style={{ opacity: inv2.opacity, x: inv2.x }} 
+                className={`text-[25px] mb-2 ${cormorant.className} font-medium`}
+              >
+                This day wouldn&apos;t be complete without our closest loved ones, so we warmly invite you to join us and celebrate this joyful occasion together.
+              </motion.p>
+
+              {/* Item 4: Para 3 — slides in from right */}
+              <motion.p 
+                style={{ opacity: inv3.opacity, x: inv3.x }} 
+                className={`text-[25px] ${cormorant.className} font-medium`}
+              >
+                We can&apos;t wait to share this memorable moment with you!
+              </motion.p>
+            </div>
+
+            {/* Item 5: Image — slides in from the left */}
+            <motion.div 
+              style={{ opacity: inv4.opacity, x: inv4.xReverse, scale: inv4.scale }} 
+              className="w-1/2 mx-auto flex justify-center mt-20"
+            >
               <img
                 src="/eng2.jpg"
                 alt="Chhaya & Dwij"
@@ -346,107 +340,131 @@ export default function EngagementInvite() {
             </motion.div>
 
           </div>
-        </motion.div>
+        </div>
       </section>
 
 
       {/* ═══ RSVP SECTION ═══ */}
       <section ref={rsvpRef} className="relative w-full py-16 md:py-24 px-4 flex justify-center mb-175">
-        <motion.div
-          style={{ y: rsvpY, opacity: rsvpOpacity }}
-          className="w-full max-w-xl"
-        >
-          <h1 className={`text-center text-[48px] text-black mb-4 ${pinyon.className}`}>
+        <div className="w-full max-w-xl">
+          {/* Item 1: Title */}
+          <motion.h1 
+            style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale }} 
+            className={`text-center text-[48px] text-black mb-4 ${pinyon.className}`}
+          >
             Be Our Guest
-          </h1>
-          <p className={`text-center text-[25px] mb-10 ${cormorant.className} font-medium`}>
+          </motion.h1>
+
+          {/* Item 2: Subtitle */}
+          <motion.p 
+            style={{ opacity: rsvp1.opacity, y: rsvp1.y }} 
+            className={`text-center text-[25px] mb-10 ${cormorant.className} font-medium`}
+          >
             Kindly let us know if you can join our celebration.
-          </p>
+          </motion.p>
 
-          {rsvpSubmitted ? (
-            /* ── Confirmation message ── */
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-10"
-            >
-              <p className={`text-[35px] text-black ${pinyon.className}`}>
-                {rsvp === "yes" ? "We can't wait to see you!" : "We'll miss you! Thank you for letting us know."}
-              </p>
-            </motion.div>
-          ) : (
-            <>
-              {/* ── Full Name ── */}
-              <label className={`block pl-3 mb-2 text-[25px] ${cormorant.className} font-medium`}>
-                Full Name <span className="text-red-400">*</span>
-              </label>
-              <input
-                id="rsvp-name"
-                type="text"
-                value={rsvpName}
-                onChange={(e) => { setRsvpName(e.target.value); if (e.target.value.trim()) setRsvpNameError(false); }}
-                placeholder="e.g. Dwij Patel"
-                className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-[25px] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none transition-all ${cormorant.className} ${rsvpNameError ? 'ring-2 ring-red-400' : ''}`}
-              />
-              {rsvpNameError && (
-                <p className={`pl-3 mt-1 text-[18px] text-red-400 ${cormorant.className}`}>
-                  Please enter your full name to continue.
+          {/* Item 3: Form */}
+          <motion.div style={{ opacity: rsvp2.opacity, y: rsvp2.y }}>
+            {rsvpSubmitted ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center py-10"
+              >
+                <p className={`text-[35px] text-black ${pinyon.className}`}>
+                  {rsvp === "yes" ? "We can\u0027t wait to see you!" : "We\u0027ll miss you! Thank you for letting us know."}
                 </p>
-              )}
+              </motion.div>
+            ) : (
+              <>
+                {/* ── Full Name ── */}
+                <label className={`block pl-3 mb-2 text-[25px] ${cormorant.className} font-medium`}>
+                  Full Name <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="rsvp-name"
+                  type="text"
+                  value={rsvpName}
+                  onChange={(e) => { setRsvpName(e.target.value); if (e.target.value.trim()) setRsvpNameError(false); }}
+                  placeholder="e.g. Dwij Patel"
+                  className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-[25px] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none transition-all ${cormorant.className} ${rsvpNameError ? 'ring-2 ring-red-400' : ''}`}
+                />
+                {rsvpNameError && (
+                  <p className={`pl-3 mt-1 text-[18px] text-red-400 ${cormorant.className}`}>
+                    Please enter your full name to continue.
+                  </p>
+                )}
 
-              {/* ── Will you attend? ── */}
-              <label className={`block pl-3 mt-8 mb-2 text-[25px] ${cormorant.className} font-medium`}>
-                Will you be attending?
-              </label>
-              <div className="grid grid-cols-2 gap-8">
-                <motion.button
-                  id="rsvp-yes"
-                  type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleRsvpAttend("yes")}
-                  className={`py-2 rounded-[10px] text-[25px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
-                    rsvp === "yes"
-                      ? "bg-[#FCD66B] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
-                      : "bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:bg-[#FCD66B]/50"
-                  }`}
-                >
-                  Yes
-                </motion.button>
-                <motion.button
-                  id="rsvp-no"
-                  type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleRsvpAttend("no")}
-                  className={`py-2 rounded-[10px] text-[25px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
-                    rsvp === "no"
-                      ? "bg-[#FCD66B] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
-                      : "bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:bg-[#FCD66B]/50"
-                  }`}
-                >
-                  No
-                </motion.button>
-              </div>
+                {/* ── Will you attend? ── */}
+                <label className={`block pl-3 mt-8 mb-2 text-[25px] ${cormorant.className} font-medium`}>
+                  Will you be attending?
+                </label>
+                <div className="grid grid-cols-2 gap-8">
+                  <motion.button
+                    id="rsvp-yes"
+                    type="button"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleRsvpAttend("yes")}
+                    className={`py-2 rounded-[10px] text-[25px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
+                      rsvp === "yes"
+                        ? "bg-[#FCD66B] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
+                        : "bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:bg-[#FCD66B]/50"
+                    }`}
+                  >
+                    Yes
+                  </motion.button>
+                  <motion.button
+                    id="rsvp-no"
+                    type="button"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleRsvpAttend("no")}
+                    className={`py-2 rounded-[10px] text-[25px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
+                      rsvp === "no"
+                        ? "bg-[#FCD66B] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
+                        : "bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:bg-[#FCD66B]/50"
+                    }`}
+                  >
+                    No
+                  </motion.button>
+                </div>
 
-              {/* ── If Yes: show guest count then submit ── */}
-              {rsvp === "yes" && (
-                <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-                  <label className={`block pl-3 mt-8 mb-2 text-[25px] ${cormorant.className} font-medium`}>
-                    How many people will be attending?
-                  </label>
-                  <input
-                    id="rsvp-guests"
-                    type="number"
-                    min="1"
-                    value={rsvpGuests}
-                    onChange={(e) => setRsvpGuests(e.target.value)}
-                    placeholder="e.g. 4"
-                    className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-[25px] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none ${cormorant.className}`}
-                  />
-                  <div className="flex justify-center mt-10">
+                {/* ── If Yes: show guest count then submit ── */}
+                {rsvp === "yes" && (
+                  <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+                    <label className={`block pl-3 mt-8 mb-2 text-[25px] ${cormorant.className} font-medium`}>
+                      How many people will be attending?
+                    </label>
+                    <input
+                      id="rsvp-guests"
+                      type="number"
+                      min="1"
+                      value={rsvpGuests}
+                      onChange={(e) => setRsvpGuests(e.target.value)}
+                      placeholder="e.g. 4"
+                      className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-[25px] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none ${cormorant.className}`}
+                    />
+                    <div className="flex justify-center mt-10">
+                      <motion.button
+                        id="rsvp-submit-yes"
+                        type="button"
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={handleRsvpSubmit}
+                        className={`px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-[25px] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className}`}
+                      >
+                        Confirm RSVP
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* ── If No: show submit immediately ── */}
+                {rsvp === "no" && (
+                  <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="flex justify-center mt-10">
                     <motion.button
-                      id="rsvp-submit-yes"
+                      id="rsvp-submit-no"
                       type="button"
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
@@ -455,28 +473,12 @@ export default function EngagementInvite() {
                     >
                       Confirm RSVP
                     </motion.button>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* ── If No: show submit immediately ── */}
-              {rsvp === "no" && (
-                <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="flex justify-center mt-10">
-                  <motion.button
-                    id="rsvp-submit-no"
-                    type="button"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={handleRsvpSubmit}
-                    className={`px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-[25px] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className}`}
-                  >
-                    Confirm RSVP
-                  </motion.button>
-                </motion.div>
-              )}
-            </>
-          )}
-        </motion.div>
+                  </motion.div>
+                )}
+              </>
+            )}
+          </motion.div>
+        </div>
       </section>
 
   
