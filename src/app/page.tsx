@@ -145,6 +145,7 @@ export default function EngagementInvite() {
 
   return (
     <main className={`min-h-screen text-[#4A433E] ${cormorant.className} overflow-x-hidden selection:text-white relative`}>
+      {/* Viewport meta is handled by Next.js */}
       {/* ═══ RSVP REMINDER POPUP ═══ */}
       <AnimatePresence>
         {showReminder && (
@@ -153,9 +154,9 @@ export default function EngagementInvite() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-[#FBF7EF] px-4 md:px-6 py-2 md:py-3 rounded-[15px] shadow-lg flex items-center gap-3 w-full md:w-auto max-w-md ${cormorant.className}`}
+            className={`fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-50 bg-[#FBF7EF] px-4 md:px-6 py-2 md:py-3 rounded-[15px] shadow-lg flex items-center gap-3 w-[calc(100%-2rem)] sm:w-auto max-w-md ${cormorant.className}`}
           >
-            <span className="text-[18px] md:text-[22px] font-medium text-black text-center flex-1">
+            <span className="font-medium text-black text-center flex-1" style={{ fontSize: 'clamp(16px, 3.5vw, 22px)' }}>
               Please fill out the RSVP below!
             </span>
             <button 
@@ -182,12 +183,12 @@ export default function EngagementInvite() {
 
 
       {/* ═══ SECTION 1: HERO ═══ */}
-      <section ref={heroRef} className="relative w-full min-h-[100svh] flex flex-col items-center justify-center px-6 py-16 md:py-24 overflow-hidden">
+      <section ref={heroRef} className="relative w-full min-h-[100svh] flex flex-col items-center justify-center px-4 sm:px-6 py-12 md:py-24 overflow-hidden">
         <motion.div style={{ y: heroY, opacity: heroOpacity }} className="flex flex-col items-center w-full">
           <motion.img
             src="/ganpati.png"
             alt="ganpati"
-            className="mt-4 h-20 pointer-events-none"
+            className="mt-4 h-14 sm:h-20 pointer-events-none"
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -198,7 +199,8 @@ export default function EngagementInvite() {
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }} 
-              className={`text-[25px] mb-4 ${cormorant.className} font-medium`}
+              className={`mb-3 sm:mb-4 ${cormorant.className} font-medium`}
+              style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
             >
               With the blesses of our Families 
             </motion.p>
@@ -207,16 +209,18 @@ export default function EngagementInvite() {
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }} 
-              className={`text-[48px] md:text-[96px] text-[#837834] leading-[1.0] mb-4 ${pinyon.className} relative z-20 py-4 px-2`}
+              className={`text-[#837834] leading-[1.0] mb-3 sm:mb-4 ${pinyon.className} relative z-20 py-2 sm:py-4 px-2`}
+              style={{ fontSize: 'clamp(42px, 12vw, 96px)' }}
             >
-              Chhaya <span className={`text-[28px] sm:text-[42px] md:text-[54px] bg-clip-text mx-4 ${cormorant.className} font-light italic inline-block`}>&amp;</span> Dwij
+              Chhaya <span className={`bg-clip-text mx-2 sm:mx-4 ${cormorant.className} font-light italic inline-block`} style={{ fontSize: 'clamp(24px, 6vw, 54px)' }}>&amp;</span> Dwij
             </motion.h1>
 
             <motion.p 
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
-              className={`text-[25px] mb-4 ${cormorant.className} font-medium`}
+              className={`mb-3 sm:mb-4 ${cormorant.className} font-medium`}
+              style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
             >
               Are getting engaged On
             </motion.p>
@@ -224,7 +228,8 @@ export default function EngagementInvite() {
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }} 
-              className={`text-[35px] ${cormorant.className} font-semibold`}
+              className={`${cormorant.className} font-semibold`}
+              style={{ fontSize: 'clamp(26px, 6vw, 35px)' }}
             >
               July 16th
             </motion.p>
@@ -233,43 +238,43 @@ export default function EngagementInvite() {
       </section>
           
       {/* ═══ SECTION 2: COUNTDOWN TIMER ═══ */}
-      <section ref={countdownRef} className="relative w-full py-16 md:py-24 z-10 px-6 flex justify-center items-center mb-100">
+      <section ref={countdownRef} className="relative w-full py-12 sm:py-16 md:py-24 z-10 px-4 sm:px-6 flex justify-center items-center mb-20 sm:mb-40 md:mb-100">
         <div className="w-full flex justify-center">
           <div className="w-full max-w-[420px] flex flex-col">
             <div className="pt-2 pb-8 px-4 flex flex-col items-center text-center">
               
               {/* Item 1: Countdown Numbers — fades up */}
               <motion.div style={{ opacity: cd0.opacity, y: cd0.y, scale: cd0.scale }} className="flex flex-col items-center w-full mb-16">
-                <div className="flex items-center justify-between w-full max-w-[320px] text-black text-[38px] sm:text-[44px] font-normal tracking-wide font-serif">
-                  <span className="w-16 text-center tabular-nums">{String(timeLeft.days).padStart(2, "0")}</span>
+                <div className="flex items-center justify-between w-full max-w-[280px] sm:max-w-[320px] text-black font-normal tracking-wide font-serif" style={{ fontSize: 'clamp(28px, 7vw, 44px)' }}>
+                  <span className="w-12 sm:w-16 text-center tabular-nums">{String(timeLeft.days).padStart(2, "0")}</span>
                   <span className="text-black select-none pb-2">:</span>
-                  <span className="w-12 text-center tabular-nums">{String(timeLeft.hours).padStart(2, "0")}</span>
+                  <span className="w-10 sm:w-12 text-center tabular-nums">{String(timeLeft.hours).padStart(2, "0")}</span>
                   <span className="text-black select-none pb-2">:</span>
-                  <span className="w-12 text-center tabular-nums">{String(timeLeft.minutes).padStart(2, "0")}</span>
+                  <span className="w-10 sm:w-12 text-center tabular-nums">{String(timeLeft.minutes).padStart(2, "0")}</span>
                   <span className="text-black select-none pb-2">:</span>
-                  <span className="w-12 text-center tabular-nums">{String(timeLeft.seconds).padStart(2, "0")}</span>
+                  <span className="w-10 sm:w-12 text-center tabular-nums">{String(timeLeft.seconds).padStart(2, "0")}</span>
                 </div>
-                <div className="flex justify-between w-full max-w-[320px] text-[15px] font-light text-black px-1">
-                  <span className="w-16 text-center">Days</span>
-                  <span className="w-12 text-center">Hours</span>
-                  <span className="w-12 text-center">Minutes</span>
-                  <span className="w-12 text-center">Seconds</span>
+                <div className="flex justify-between w-full max-w-[280px] sm:max-w-[320px] font-light text-black px-1" style={{ fontSize: 'clamp(12px, 2.5vw, 15px)' }}>
+                  <span className="w-12 sm:w-16 text-center">Days</span>
+                  <span className="w-10 sm:w-12 text-center">Hours</span>
+                  <span className="w-10 sm:w-12 text-center">Minutes</span>
+                  <span className="w-10 sm:w-12 text-center">Seconds</span>
                 </div>
               </motion.div>
 
               {/* Item 2: "Where is it?" heading — fades up */}
               <motion.div style={{ opacity: cd1.opacity, y: cd1.y, scale: cd1.scale }}>
-                <h1 className={`text-[48px] text-black leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2`}>
+                <h1 className={`text-black leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2`} style={{ fontSize: 'clamp(32px, 8vw, 48px)' }}>
                   Where is it?
                 </h1>
               </motion.div>
 
               {/* Item 3: Address + Directions button — fades up */}
               <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }}>
-                <p className={`text-[25px] ${cormorant.className} font-medium`}>
+                <p className={`${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
                   Beaumont Community Centre
                 </p>
-                <p className={`text-[25px] mb-8 ${cormorant.className} font-medium`}>
+                <p className={`mb-6 sm:mb-8 ${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
                   5204 50 Ave, Beaumont, AB T4X 1E3
                 </p>
                 <motion.a
@@ -278,10 +283,25 @@ export default function EngagementInvite() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className={`block mt-10 text-center cursor-pointer text-[25px] bg-[#FCCBBF] ${cormorant.className} font-medium py-2 px-3 rounded-[10px] mx-20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:brightness-95 transition-all`}
+                  className={`block mt-6 sm:mt-10 text-center cursor-pointer bg-[#FCCBBF] ${cormorant.className} font-medium py-2 px-3 rounded-[10px] mx-6 sm:mx-20 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:brightness-95 transition-all`}
+                  style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                 >
                   Get Directions
                 </motion.a>
+              </motion.div>
+
+
+              <motion.div style={{ opacity: cd1.opacity, y: cd1.y, scale: cd1.scale }}>
+                <h1 className={`text-black leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2 mt-12 sm:mt-20`} style={{ fontSize: 'clamp(32px, 8vw, 48px)' }}>
+                  When is it?
+                </h1>
+              </motion.div>
+
+              {/* Item 3: Address + Directions button — fades up */}
+              <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }} className="">
+                <p className={`${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
+                  From 9:00 am to 2:00 pm
+                </p>
               </motion.div>
             </div>
           </div>
@@ -289,39 +309,39 @@ export default function EngagementInvite() {
       </section>
 
       {/* ═══ SECTION 3: INVITE ═══ */}
-      <section ref={inviteRef} className="relative w-full py-16 md:py-24 z-10 px-6 flex justify-center items-center mb-100">
+      <section ref={inviteRef} className="relative w-full py-12 sm:py-16 md:py-24 z-10 px-4 sm:px-6 flex justify-center items-center mb-20 sm:mb-40 md:mb-100">
         <div className="w-full flex justify-center">
-          <div className="w-1/2 flex flex-col">
+          <div className="w-full sm:w-3/4 md:w-1/2 flex flex-col">
 
             <div className="pt-2 flex flex-col items-center text-center">
               {/* Item 1: Heading — slides in from right */}
               <motion.h1 
-                style={{ opacity: inv0.opacity, x: inv0.x, scale: inv0.scale }} 
-                className={`w-full text-[48px] text-black leading-[1.0] ${pinyon.className} relative z-20 mb-4`}
+                style={{ opacity: inv0.opacity, x: inv0.x, scale: inv0.scale, fontSize: 'clamp(32px, 8vw, 48px)' }} 
+                className={`w-full text-black leading-[1.0] ${pinyon.className} relative z-20 mb-3 sm:mb-4`}
               >
                 Dear friends and family!
               </motion.h1>
 
               {/* Item 2: Para 1 — slides in from right */}
               <motion.p 
-                style={{ opacity: inv1.opacity, x: inv1.x }} 
-                className={`text-[25px] mb-2 ${cormorant.className} font-medium`}
+                style={{ opacity: inv1.opacity, x: inv1.x, fontSize: 'clamp(16px, 4vw, 25px)' }} 
+                className={`mb-2 ${cormorant.className} font-medium`}
               >
                 We are thrilled to announce a special event happening this summer our engagement!
               </motion.p>
 
               {/* Item 3: Para 2 — slides in from right */}
               <motion.p 
-                style={{ opacity: inv2.opacity, x: inv2.x }} 
-                className={`text-[25px] mb-2 ${cormorant.className} font-medium`}
+                style={{ opacity: inv2.opacity, x: inv2.x, fontSize: 'clamp(16px, 4vw, 25px)' }} 
+                className={`mb-2 ${cormorant.className} font-medium`}
               >
                 This day wouldn&apos;t be complete without our closest loved ones, so we warmly invite you to join us and celebrate this joyful occasion together.
               </motion.p>
 
               {/* Item 4: Para 3 — slides in from right */}
               <motion.p 
-                style={{ opacity: inv3.opacity, x: inv3.x }} 
-                className={`text-[25px] ${cormorant.className} font-medium`}
+                style={{ opacity: inv3.opacity, x: inv3.x, fontSize: 'clamp(16px, 4vw, 25px)' }} 
+                className={`${cormorant.className} font-medium`}
               >
                 We can&apos;t wait to share this memorable moment with you!
               </motion.p>
@@ -330,12 +350,12 @@ export default function EngagementInvite() {
             {/* Item 5: Image — slides in from the left */}
             <motion.div 
               style={{ opacity: inv4.opacity, x: inv4.xReverse, scale: inv4.scale }} 
-              className="w-1/2 mx-auto flex justify-center mt-20"
+              className="w-full sm:w-3/4 md:w-1/2 mx-auto flex justify-center mt-10 sm:mt-20"
             >
               <img
                 src="/eng2.jpg"
                 alt="Chhaya & Dwij"
-                className="h-120 object-cover pointer-events-none"
+                className="w-full h-auto max-h-[400px] sm:max-h-[480px] object-cover pointer-events-none rounded-sm"
               />
             </motion.div>
 
@@ -345,20 +365,20 @@ export default function EngagementInvite() {
 
 
       {/* ═══ RSVP SECTION ═══ */}
-      <section ref={rsvpRef} className="relative w-full py-16 md:py-24 px-4 flex justify-center mb-175">
+      <section ref={rsvpRef} className="relative w-full py-12 sm:py-0 md:py-100 px-4 flex justify-center mb-[45vh] sm:mb-[40vh] md:mb-[35vh]">
         <div className="w-full max-w-xl">
           {/* Item 1: Title */}
           <motion.h1 
-            style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale }} 
-            className={`text-center text-[48px] text-black mb-4 ${pinyon.className}`}
+            style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: 'clamp(32px, 8vw, 48px)' }} 
+            className={`text-center text-black mb-3 sm:mb-4 ${pinyon.className}`}
           >
             Be Our Guest
           </motion.h1>
 
           {/* Item 2: Subtitle */}
           <motion.p 
-            style={{ opacity: rsvp1.opacity, y: rsvp1.y }} 
-            className={`text-center text-[25px] mb-10 ${cormorant.className} font-medium`}
+            style={{ opacity: rsvp1.opacity, y: rsvp1.y, fontSize: 'clamp(16px, 4vw, 25px)' }} 
+            className={`text-center mb-6 sm:mb-10 ${cormorant.className} font-medium`}
           >
             Kindly let us know if you can join our celebration.
           </motion.p>
@@ -369,16 +389,16 @@ export default function EngagementInvite() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-center py-10"
+                className="text-center"
               >
-                <p className={`text-[35px] text-black ${pinyon.className}`}>
+                <p className={`text-black ${pinyon.className}`} style={{ fontSize: 'clamp(28px, 7vw, 35px)' }}>
                   {rsvp === "yes" ? "We can\u0027t wait to see you!" : "We\u0027ll miss you! Thank you for letting us know."}
                 </p>
               </motion.div>
             ) : (
               <>
                 {/* ── Full Name ── */}
-                <label className={`block pl-3 mb-2 text-[25px] ${cormorant.className} font-medium`}>
+                <label className={`block pl-3 mb-2 ${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
                   Full Name <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -387,30 +407,32 @@ export default function EngagementInvite() {
                   value={rsvpName}
                   onChange={(e) => { setRsvpName(e.target.value); if (e.target.value.trim()) setRsvpNameError(false); }}
                   placeholder="e.g. Dwij Patel"
-                  className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-[25px] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none transition-all ${cormorant.className} ${rsvpNameError ? 'ring-2 ring-red-400' : ''}`}
+                  className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none transition-all ${cormorant.className} ${rsvpNameError ? 'ring-2 ring-red-400' : ''}`}
+                  style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                 />
                 {rsvpNameError && (
-                  <p className={`pl-3 mt-1 text-[18px] text-red-400 ${cormorant.className}`}>
+                  <p className={`pl-3 mt-1 text-red-400 ${cormorant.className}`} style={{ fontSize: 'clamp(14px, 3.5vw, 18px)' }}>
                     Please enter your full name to continue.
                   </p>
                 )}
 
                 {/* ── Will you attend? ── */}
-                <label className={`block pl-3 mt-8 mb-2 text-[25px] ${cormorant.className} font-medium`}>
+                <label className={`block pl-3 mt-6 sm:mt-8 mb-2 ${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
                   Will you be attending?
                 </label>
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-2 gap-4 sm:gap-8">
                   <motion.button
                     id="rsvp-yes"
                     type="button"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleRsvpAttend("yes")}
-                    className={`py-2 rounded-[10px] text-[25px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
+                    className={`py-2 rounded-[10px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
                       rsvp === "yes"
                         ? "bg-[#FCD66B] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
                         : "bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:bg-[#FCD66B]/50"
                     }`}
+                    style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                   >
                     Yes
                   </motion.button>
@@ -420,11 +442,12 @@ export default function EngagementInvite() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleRsvpAttend("no")}
-                    className={`py-2 rounded-[10px] text-[25px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
+                    className={`py-2 rounded-[10px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
                       rsvp === "no"
                         ? "bg-[#FCD66B] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
                         : "bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:bg-[#FCD66B]/50"
                     }`}
+                    style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                   >
                     No
                   </motion.button>
@@ -433,7 +456,7 @@ export default function EngagementInvite() {
                 {/* ── If Yes: show guest count then submit ── */}
                 {rsvp === "yes" && (
                   <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-                    <label className={`block pl-3 mt-8 mb-2 text-[25px] ${cormorant.className} font-medium`}>
+                    <label className={`block pl-3 mt-6 sm:mt-8 mb-2 ${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
                       How many people will be attending?
                     </label>
                     <input
@@ -443,7 +466,8 @@ export default function EngagementInvite() {
                       value={rsvpGuests}
                       onChange={(e) => setRsvpGuests(e.target.value)}
                       placeholder="e.g. 4"
-                      className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-[25px] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none ${cormorant.className}`}
+                      className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none ${cormorant.className}`}
+                      style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                     />
                     <div className="flex justify-center mt-10">
                       <motion.button
@@ -452,7 +476,8 @@ export default function EngagementInvite() {
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={handleRsvpSubmit}
-                        className={`px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-[25px] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className}`}
+                        className={`px-8 sm:px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className}`}
+                        style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                       >
                         Confirm RSVP
                       </motion.button>
@@ -469,7 +494,8 @@ export default function EngagementInvite() {
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                       onClick={handleRsvpSubmit}
-                      className={`px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-[25px] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className}`}
+                      className={`px-8 sm:px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className}`}
+                      style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                     >
                       Confirm RSVP
                     </motion.button>
