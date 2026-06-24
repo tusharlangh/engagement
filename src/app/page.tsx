@@ -71,7 +71,7 @@ export default function EngagementInvite() {
       return;
     }
 
-    if (rsvp === "yes" && !rsvpGuests.trim()) {
+    if (rsvp === "yes" && (!rsvpGuests.trim() || parseInt(rsvpGuests, 10) <= 0)) {
       setRsvpGuestsError(true);
       return;
     }
@@ -268,7 +268,7 @@ export default function EngagementInvite() {
               className={`${cormorant.className} font-semibold`}
               style={{ fontSize: 'clamp(26px, 6vw, 35px)' }}
             >
-              July 16th
+              July 19th
             </motion.p>
           </div>
         </motion.div>
@@ -337,7 +337,7 @@ export default function EngagementInvite() {
               {/* Item 3: Address + Directions button — fades up */}
               <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }} className="">
                 <p className={`${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
-                  From 9:00 am to 2:00 pm
+                  From 9:00 am to 1:00 pm
                 </p>
               </motion.div>
             </div>
@@ -364,23 +364,7 @@ export default function EngagementInvite() {
                 style={{ opacity: inv1.opacity, x: inv1.x, fontSize: 'clamp(16px, 4vw, 25px)' }} 
                 className={`mb-2 ${cormorant.className} font-medium`}
               >
-                We are thrilled to announce a special event happening this summer our engagement!
-              </motion.p>
-
-              {/* Item 3: Para 2 — slides in from right */}
-              <motion.p 
-                style={{ opacity: inv2.opacity, x: inv2.x, fontSize: 'clamp(16px, 4vw, 25px)' }} 
-                className={`mb-2 ${cormorant.className} font-medium`}
-              >
-                This day wouldn&apos;t be complete without our closest loved ones, so we warmly invite you to join us and celebrate this joyful occasion together.
-              </motion.p>
-
-              {/* Item 4: Para 3 — slides in from right */}
-              <motion.p 
-                style={{ opacity: inv3.opacity, x: inv3.x, fontSize: 'clamp(16px, 4vw, 25px)' }} 
-                className={`${cormorant.className} font-medium`}
-              >
-                We can&apos;t wait to share this memorable moment with you!
+                Together with our families, we look forward to celebrating a day filled with love, laughter, and cherished memories. We would be delighted to have you join us. 
               </motion.p>
             </div>
 
@@ -390,7 +374,7 @@ export default function EngagementInvite() {
               className="w-full sm:w-3/4 md:w-1/2 mx-auto flex justify-center mt-10 sm:mt-20"
             >
               <img
-                src="/eng2.jpg"
+                src="/eng2.JPG"
                 alt="Chhaya & Dwij"
                 className="w-full h-auto max-h-[400px] sm:max-h-[480px] object-cover pointer-events-none rounded-sm"
               />
@@ -501,14 +485,19 @@ export default function EngagementInvite() {
                       type="number"
                       min="1"
                       value={rsvpGuests}
-                      onChange={(e) => { setRsvpGuests(e.target.value); if (e.target.value.trim()) setRsvpGuestsError(false); }}
+                      onChange={(e) => { 
+                        setRsvpGuests(e.target.value); 
+                        if (e.target.value.trim() && parseInt(e.target.value, 10) > 0) {
+                          setRsvpGuestsError(false);
+                        }
+                      }}
                       placeholder="e.g. 4"
                       className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none transition-all ${cormorant.className} ${rsvpGuestsError ? 'ring-2 ring-red-400' : ''}`}
                       style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                     />
                     {rsvpGuestsError && (
                       <p className={`pl-3 mt-1 text-red-400 ${cormorant.className}`} style={{ fontSize: 'clamp(14px, 3.5vw, 18px)' }}>
-                        Please enter the number of guests.
+                        Please enter at least 1 guest.
                       </p>
                     )}
                     <div className="flex justify-center mt-10">
