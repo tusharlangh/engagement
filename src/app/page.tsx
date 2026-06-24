@@ -42,12 +42,19 @@ function useStaggeredScroll(
 }
 
 // ───────────────────────────────────────────────────────
+// ── Google Sheets Integration ───────────────────────
+// Replace this URL with your deployed Google Apps Script web app URL
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXkhGWThVfKYQ1_Q1H897_zvjf6sS5JnlriqLo3LbxdU4-Ivg3Qe4ieW_6TEoYndya/exec";
+
 export default function EngagementInvite() {
   const [rsvp, setRsvp] = useState<"yes" | "no" | null>(null);
   const [rsvpName, setRsvpName] = useState("");
   const [rsvpGuests, setRsvpGuests] = useState("");
   const [rsvpNameError, setRsvpNameError] = useState(false);
+  const [rsvpGuestsError, setRsvpGuestsError] = useState(false);
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
+  const [rsvpLoading, setRsvpLoading] = useState(false);
+  const [rsvpError, setRsvpError] = useState(false);
 
   const handleRsvpAttend = (choice: "yes" | "no") => {
     if (!rsvpName.trim()) {
@@ -58,12 +65,42 @@ export default function EngagementInvite() {
     setRsvp(choice);
   };
 
-  const handleRsvpSubmit = () => {
+  const handleRsvpSubmit = async () => {
     if (!rsvpName.trim()) {
       setRsvpNameError(true);
       return;
     }
-    setRsvpSubmitted(true);
+
+    if (rsvp === "yes" && !rsvpGuests.trim()) {
+      setRsvpGuestsError(true);
+      return;
+    }
+
+    setRsvpLoading(true);
+    setRsvpError(false);
+
+    try {
+      const payload = {
+        name: rsvpName.trim(),
+        attending: rsvp === "yes" ? "Yes" : "No",
+        guests: rsvp === "yes" ? rsvpGuests.trim() : "0",
+        timestamp: new Date().toISOString(),
+      };
+
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Apps Script doesn't support CORS preflight
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      // no-cors means we can't read the response, but if no error was thrown the request was sent
+      setRsvpSubmitted(true);
+    } catch {
+      setRsvpError(true);
+    } finally {
+      setRsvpLoading(false);
+    }
   };
 
   const [timeLeft, setTimeLeft] = useState({
@@ -367,36 +404,36 @@ export default function EngagementInvite() {
       {/* ═══ RSVP SECTION ═══ */}
       <section ref={rsvpRef} className="relative w-full py-12 sm:py-0 md:py-100 px-4 flex justify-center mb-[45vh] sm:mb-[40vh] md:mb-[35vh]">
         <div className="w-full max-w-xl">
-          {/* Item 1: Title */}
-          <motion.h1 
-            style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: 'clamp(32px, 8vw, 48px)' }} 
-            className={`text-center text-black mb-3 sm:mb-4 ${pinyon.className}`}
-          >
-            Be Our Guest
-          </motion.h1>
-
-          {/* Item 2: Subtitle */}
-          <motion.p 
-            style={{ opacity: rsvp1.opacity, y: rsvp1.y, fontSize: 'clamp(16px, 4vw, 25px)' }} 
-            className={`text-center mb-6 sm:mb-10 ${cormorant.className} font-medium`}
-          >
-            Kindly let us know if you can join our celebration.
-          </motion.p>
-
-          {/* Item 3: Form */}
-          <motion.div style={{ opacity: rsvp2.opacity, y: rsvp2.y }}>
-            {rsvpSubmitted ? (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center"
+          {rsvpSubmitted ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center"
+            >
+              <p className={`text-black ${pinyon.className}`} style={{ fontSize: 'clamp(28px, 7vw, 35px)' }}>
+                {rsvp === "yes" ? "We can\u0027t wait to see you!" : "We\u0027ll miss you! Thank you for letting us know."}
+              </p>
+            </motion.div>
+          ) : (
+            <>
+              {/* Item 1: Title */}
+              <motion.h1 
+                style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: 'clamp(32px, 8vw, 48px)' }} 
+                className={`text-center text-black mb-3 sm:mb-4 ${pinyon.className}`}
               >
-                <p className={`text-black ${pinyon.className}`} style={{ fontSize: 'clamp(28px, 7vw, 35px)' }}>
-                  {rsvp === "yes" ? "We can\u0027t wait to see you!" : "We\u0027ll miss you! Thank you for letting us know."}
-                </p>
-              </motion.div>
-            ) : (
-              <>
+                Be Our Guest
+              </motion.h1>
+
+              {/* Item 2: Subtitle */}
+              <motion.p 
+                style={{ opacity: rsvp1.opacity, y: rsvp1.y, fontSize: 'clamp(16px, 4vw, 25px)' }} 
+                className={`text-center mb-6 sm:mb-10 ${cormorant.className} font-medium`}
+              >
+                Kindly let us know if you can join our celebration.
+              </motion.p>
+
+              {/* Item 3: Form */}
+              <motion.div style={{ opacity: rsvp2.opacity, y: rsvp2.y }}>
                 {/* ── Full Name ── */}
                 <label className={`block pl-3 mb-2 ${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
                   Full Name <span className="text-red-400">*</span>
@@ -457,18 +494,23 @@ export default function EngagementInvite() {
                 {rsvp === "yes" && (
                   <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
                     <label className={`block pl-3 mt-6 sm:mt-8 mb-2 ${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
-                      How many people will be attending?
+                      How many people will be attending? <span className="text-red-400">*</span>
                     </label>
                     <input
                       id="rsvp-guests"
                       type="number"
                       min="1"
                       value={rsvpGuests}
-                      onChange={(e) => setRsvpGuests(e.target.value)}
+                      onChange={(e) => { setRsvpGuests(e.target.value); if (e.target.value.trim()) setRsvpGuestsError(false); }}
                       placeholder="e.g. 4"
-                      className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none ${cormorant.className}`}
+                      className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none transition-all ${cormorant.className} ${rsvpGuestsError ? 'ring-2 ring-red-400' : ''}`}
                       style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                     />
+                    {rsvpGuestsError && (
+                      <p className={`pl-3 mt-1 text-red-400 ${cormorant.className}`} style={{ fontSize: 'clamp(14px, 3.5vw, 18px)' }}>
+                        Please enter the number of guests.
+                      </p>
+                    )}
                     <div className="flex justify-center mt-10">
                       <motion.button
                         id="rsvp-submit-yes"
@@ -476,10 +518,11 @@ export default function EngagementInvite() {
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={handleRsvpSubmit}
-                        className={`px-8 sm:px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className}`}
+                        disabled={rsvpLoading}
+                        className={`px-8 sm:px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
                         style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                       >
-                        Confirm RSVP
+                        {rsvpLoading ? 'Sending...' : 'Confirm RSVP'}
                       </motion.button>
                     </div>
                   </motion.div>
@@ -494,16 +537,28 @@ export default function EngagementInvite() {
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.97 }}
                       onClick={handleRsvpSubmit}
-                      className={`px-8 sm:px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className}`}
+                      disabled={rsvpLoading}
+                      className={`px-8 sm:px-10 py-2 rounded-[10px] bg-[#FCCBBF] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
                       style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}
                     >
-                      Confirm RSVP
+                      {rsvpLoading ? 'Sending...' : 'Confirm RSVP'}
                     </motion.button>
                   </motion.div>
                 )}
-              </>
-            )}
-          </motion.div>
+
+                {rsvpError && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className={`text-center mt-4 text-red-400 ${cormorant.className}`}
+                    style={{ fontSize: 'clamp(14px, 3.5vw, 18px)' }}
+                  >
+                    Something went wrong. Please try again.
+                  </motion.p>
+                )}
+              </motion.div>
+            </>
+          )}
         </div>
       </section>
 
