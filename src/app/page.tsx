@@ -167,12 +167,10 @@ export default function EngagementInvite() {
 
   // ── Invite: scroll-driven staggered reveal ──────────
   const { scrollYProgress: invProgress } = useScroll({ target: inviteRef, offset: ["start end", "center center"] });
-  // 4 items: heading, para1, para2, para3, then image
-  const inv0 = useStaggeredScroll(invProgress, 0, 5, { startOffset: 0.0 });
-  const inv1 = useStaggeredScroll(invProgress, 1, 5, { startOffset: 0.0 });
-  const inv2 = useStaggeredScroll(invProgress, 2, 5, { startOffset: 0.0 });
-  const inv3 = useStaggeredScroll(invProgress, 3, 5, { startOffset: 0.0 });
-  const inv4 = useStaggeredScroll(invProgress, 4, 5, { startOffset: 0.0 });
+  // 3 items: heading, para1, then image
+  const inv0 = useStaggeredScroll(invProgress, 0, 3, { startOffset: 0.0 });
+  const inv1 = useStaggeredScroll(invProgress, 1, 3, { startOffset: 0.0 });
+  const inv2 = useStaggeredScroll(invProgress, 2, 3, { startOffset: 0.0 });
 
   // ── RSVP: scroll-driven staggered reveal ────────────
   const { scrollYProgress: rsvpProgress } = useScroll({ target: rsvpRef, offset: ["start end", "center center"] });
@@ -351,26 +349,26 @@ export default function EngagementInvite() {
           <div className="w-full sm:w-3/4 md:w-1/2 flex flex-col">
 
             <div className="pt-2 flex flex-col items-center text-center">
-              {/* Item 1: Heading — slides in from right */}
+              {/* Item 1: Heading — fades up */}
               <motion.h1 
-                style={{ opacity: inv0.opacity, x: inv0.x, scale: inv0.scale, fontSize: 'clamp(32px, 8vw, 48px)' }} 
+                style={{ opacity: inv0.opacity, y: inv0.y, scale: inv0.scale, fontSize: 'clamp(32px, 8vw, 48px)' }} 
                 className={`w-full text-black leading-[1.0] ${pinyon.className} relative z-20 mb-3 sm:mb-4`}
               >
                 Dear friends and family!
               </motion.h1>
 
-              {/* Item 2: Para 1 — slides in from right */}
+              {/* Item 2: Para 1 — fades up */}
               <motion.p 
-                style={{ opacity: inv1.opacity, x: inv1.x, fontSize: 'clamp(16px, 4vw, 25px)' }} 
+                style={{ opacity: inv1.opacity, y: inv1.y, fontSize: 'clamp(16px, 4vw, 25px)' }} 
                 className={`mb-2 ${cormorant.className} font-medium`}
               >
                 Together with our families, we look forward to celebrating a day filled with love, laughter, and cherished memories. We would be delighted to have you join us. 
               </motion.p>
             </div>
 
-            {/* Item 5: Image — slides in from the left */}
+            {/* Item 3: Image — fades up */}
             <motion.div 
-              style={{ opacity: inv4.opacity, x: inv4.xReverse, scale: inv4.scale }} 
+              style={{ opacity: inv2.opacity, y: inv2.y, scale: inv2.scale }} 
               className="w-full sm:w-3/4 md:w-1/2 mx-auto flex justify-center mt-10 sm:mt-20"
             >
               <img
