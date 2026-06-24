@@ -374,7 +374,7 @@ export default function EngagementInvite() {
               className="w-full sm:w-3/4 md:w-1/2 mx-auto flex justify-center mt-10 sm:mt-20"
             >
               <img
-                src="/eng2.JPG"
+                src="/eng2.jpg"
                 alt="Chhaya & Dwij"
                 className="w-full h-auto max-h-[400px] sm:max-h-[480px] object-cover pointer-events-none rounded-sm"
               />
