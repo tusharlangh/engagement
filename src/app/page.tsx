@@ -335,7 +335,7 @@ export default function EngagementInvite() {
               {/* Item 3: Address + Directions button — fades up */}
               <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }} className="">
                 <p className={`${cormorant.className} font-medium`} style={{ fontSize: 'clamp(18px, 4.5vw, 25px)' }}>
-                  From 9:00 am to 1:00 pm
+                  From <span className="font-bold">9:00 am to 1:00 pm</span>
                 </p>
               </motion.div>
             </div>
@@ -372,7 +372,7 @@ export default function EngagementInvite() {
               className="w-full sm:w-3/4 md:w-1/2 mx-auto flex justify-center mt-10 sm:mt-20"
             >
               <img
-                src="/eng2.jpg"
+                src="/eng2.jpeg"
                 alt="Chhaya & Dwij"
                 className="w-full h-auto max-h-[400px] sm:max-h-[480px] object-cover pointer-events-none rounded-sm"
               />

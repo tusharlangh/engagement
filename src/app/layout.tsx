@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Chhaya & Dwij — Engagement",
   description:
     "Chhaya & Dwij are inviting you to their engagement celebration!",
+  icons: {
+    icon: "/ganpati.png",
+  },
 };
 
 export default function RootLayout({
