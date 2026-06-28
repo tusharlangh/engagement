@@ -112,7 +112,7 @@ export default function EngagementInvite() {
  });
 
  useEffect(() => {
- const targetDate = new Date("2026-07-19T15:30:00+05:30").getTime();
+ const targetDate = new Date("2026-07-19T09:00:00-06:00").getTime();
 
  const updateTimer = () => {
  const now = new Date().getTime();
@@ -179,8 +179,11 @@ export default function EngagementInvite() {
  const rsvp2 = useStaggeredScroll(rsvpProgress, 2, 3, { startOffset: 0.0 });
 
   return (
-    <div className="min-h-screen bg-white flex justify-center">
-    <main className={`w-full max-w-[430px] min-h-screen text-[#4A433E] ${cormorant.className} overflow-x-hidden selection:text-white relative bg-white shadow-[0_0_40px_rgba(0,0,0,0.08)]`}>
+    <div className="min-h-screen bg-[#FCE4EC] flex justify-center">
+    <main 
+      className={`w-full max-w-[430px] min-h-screen text-[#4A3B32] ${cormorant.className} overflow-x-hidden selection:text-white selection:bg-[#D8A4A4] relative shadow-[0_0_40px_rgba(0,0,0,0.05)]`}
+      style={{ backgroundImage: 'url(/main_bg.png)', backgroundRepeat: 'repeat', backgroundSize: '280px', backgroundBlendMode: 'multiply' }}
+    >
       {/* Viewport meta is handled by Next.js */}
  {/* ═══ RSVP REMINDER POPUP ═══ */}
  <AnimatePresence>
@@ -190,14 +193,14 @@ export default function EngagementInvite() {
  animate={{ opacity: 1, y: 0 }}
  exit={{ opacity: 0, y: -50 }}
  transition={{ duration: 0.5, ease: "easeOut" }}
-  className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-[#FBF7EF] py-2 rounded-[15px] shadow-lg flex justify-center items-center w-[calc(100%-2rem)] max-w-[360px] ${cormorant.className}`}
+  className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white border border-[#D8A4A4] py-2 rounded-[15px] shadow-sm flex justify-center items-center w-[calc(100%-2rem)] max-w-[360px] ${cormorant.className}`}
   >
-  <span className="font-medium text-black text-center" style={{ fontSize: '16px' }}>
+  <span className="font-medium text-[#8C3F4D] text-center" style={{ fontSize: '16px' }}>
   Please fill out the RSVP below!
   </span>
   <button 
   onClick={() => setShowReminder(false)}
-  className="absolute right-4 text-black/50 hover:text-black text-xl cursor-pointer"
+  className="absolute right-4 text-[#4A3B32]/50 hover:text-[#4A3B32] text-xl cursor-pointer"
   >
   ✕
   </button>
@@ -207,12 +210,12 @@ export default function EngagementInvite() {
 
  {/* ═══ INDIAN THEMED BACKGROUNDS ═══ */}
  <img
- src="/top_bg.PNG"
+ src="/top.png"
  alt=""
  className="absolute top-0 left-0 w-full h-auto pointer-events-none"
  />
  <img
- src="/bottom_bg.PNG"
+ src="/bottom.png"
  alt=""
  className="absolute bottom-0 left-0 w-full h-auto pointer-events-none"
  />
@@ -236,7 +239,7 @@ export default function EngagementInvite() {
  animate={{ opacity: 1, y: 0 }} 
  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }} 
  className={`mb-3 ${cormorant.className} font-medium`}
- style={{ fontSize: '18px' }}
+ style={{ fontSize: '20px' }}
  >
  With the blessings of our Families 
  </motion.p>
@@ -245,10 +248,10 @@ export default function EngagementInvite() {
  initial={{ opacity: 0, y: 30 }} 
  animate={{ opacity: 1, y: 0 }} 
  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }} 
- className={`text-[#837834] leading-[1.0] mb-3 ${pinyon.className} relative z-20 py-2 px-2`}
- style={{ fontSize: '42px' }}
+ className={`text-[#7A2A39] leading-[1.0] mb-3 ${pinyon.className} relative z-20 py-2 px-2`}
+ style={{ fontSize: '48px' }}
  >
- Chhaya <span className={`bg-clip-text mx-2 ${cormorant.className} font-light italic inline-block`} style={{ fontSize: '24px' }}>&amp;</span> Dwij
+ Chhaya <span className={`bg-clip-text mx-2 ${cormorant.className} font-light italic inline-block`} style={{ fontSize: '28px' }}>&amp;</span> Dwij
  </motion.h1>
 
  <motion.p 
@@ -256,7 +259,7 @@ export default function EngagementInvite() {
  animate={{ opacity: 1, y: 0 }} 
  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
  className={`mb-3 ${cormorant.className} font-medium`}
- style={{ fontSize: '18px' }}
+ style={{ fontSize: '20px' }}
  >
  Are getting engaged On
  </motion.p>
@@ -265,7 +268,7 @@ export default function EngagementInvite() {
  animate={{ opacity: 1, y: 0 }} 
  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }} 
  className={`${cormorant.className} font-semibold`}
- style={{ fontSize: '26px' }}
+ style={{ fontSize: '28px' }}
  >
  July 19th
  </motion.p>
@@ -281,16 +284,16 @@ export default function EngagementInvite() {
  
  {/* Item 1: Countdown Numbers — fades up */}
  <motion.div style={{ opacity: cd0.opacity, y: cd0.y, scale: cd0.scale }} className="flex flex-col items-center w-full mb-16">
- <div className="flex items-center justify-between w-full max-w-[280px] text-black font-normal tracking-wide font-serif" style={{ fontSize: '28px' }}>
+ <div className="flex items-center justify-between w-full max-w-[280px] text-[#4A3B32] font-normal tracking-wide font-serif" style={{ fontSize: '32px' }}>
  <span className="w-12 text-center tabular-nums">{String(timeLeft.days).padStart(2, "0")}</span>
- <span className="text-black select-none pb-2">:</span>
+ <span className="text-[#4A3B32] select-none pb-2">:</span>
  <span className="w-10 text-center tabular-nums">{String(timeLeft.hours).padStart(2, "0")}</span>
- <span className="text-black select-none pb-2">:</span>
+ <span className="text-[#4A3B32] select-none pb-2">:</span>
  <span className="w-10 text-center tabular-nums">{String(timeLeft.minutes).padStart(2, "0")}</span>
- <span className="text-black select-none pb-2">:</span>
+ <span className="text-[#4A3B32] select-none pb-2">:</span>
  <span className="w-10 text-center tabular-nums">{String(timeLeft.seconds).padStart(2, "0")}</span>
  </div>
- <div className="flex justify-between w-full max-w-[280px] font-light text-black px-1" style={{ fontSize: '12px' }}>
+ <div className="flex justify-between w-full max-w-[280px] font-medium text-[#4A3B32]/90 px-1 mt-1" style={{ fontSize: '14px' }}>
  <span className="w-12 text-center">Days</span>
  <span className="w-10 text-center">Hours</span>
  <span className="w-10 text-center">Minutes</span>
@@ -300,17 +303,17 @@ export default function EngagementInvite() {
 
  {/* Item 2: "Where is it?" heading — fades up */}
  <motion.div style={{ opacity: cd1.opacity, y: cd1.y, scale: cd1.scale }}>
- <h1 className={`text-black leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2`} style={{ fontSize: '32px' }}>
+ <h1 className={`text-[#7A2A39] leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2`} style={{ fontSize: '36px' }}>
  Where is it?
  </h1>
  </motion.div>
 
  {/* Item 3: Address + Directions button — fades up */}
  <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }}>
- <p className={`${cormorant.className} font-medium`} style={{ fontSize: '18px' }}>
+ <p className={`${cormorant.className} font-medium`} style={{ fontSize: '20px' }}>
  Beaumont Community Centre
  </p>
- <p className={`mb-6 ${cormorant.className} font-medium`} style={{ fontSize: '18px' }}>
+ <p className={`mb-6 ${cormorant.className} font-medium`} style={{ fontSize: '20px' }}>
  5204 50 Ave, Beaumont, AB T4X 1E3
  </p>
  <motion.a
@@ -319,8 +322,8 @@ export default function EngagementInvite() {
  rel="noopener noreferrer"
  whileHover={{ scale: 1.03 }}
  whileTap={{ scale: 0.97 }}
- className={`block mt-6 text-center cursor-pointer bg-[#FCCBBF] ${cormorant.className} font-medium py-2 px-3 rounded-[10px] mx-6 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:brightness-95 transition-all`}
- style={{ fontSize: '18px' }}
+ className={`block mt-4 text-center cursor-pointer bg-[#7A2A39] text-[#FCF9F2] ${cormorant.className} font-bold py-2 px-4 rounded-[10px] mx-6 hover:brightness-110 transition-all`}
+ style={{ fontSize: '16px' }}
  >
  Get Directions
  </motion.a>
@@ -328,14 +331,14 @@ export default function EngagementInvite() {
 
 
  <motion.div style={{ opacity: cd1.opacity, y: cd1.y, scale: cd1.scale }}>
- <h1 className={`text-black leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2 mt-12 `} style={{ fontSize: '32px' }}>
+ <h1 className={`text-[#7A2A39] leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2 mt-12 `} style={{ fontSize: '36px' }}>
  When is it?
  </h1>
  </motion.div>
 
  {/* Item 3: Address + Directions button — fades up */}
  <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }} className="">
- <p className={`${cormorant.className} font-medium`} style={{ fontSize: '18px' }}>
+ <p className={`${cormorant.className} font-medium`} style={{ fontSize: '20px' }}>
  From <span className="font-bold">9:00 am to 1:00 pm</span>
  </p>
  </motion.div>
@@ -352,15 +355,15 @@ export default function EngagementInvite() {
  <div className="pt-2 flex flex-col items-center text-center">
  {/* Item 1: Heading — fades up */}
  <motion.h1 
- style={{ opacity: inv0.opacity, y: inv0.y, scale: inv0.scale, fontSize: '32px' }} 
- className={`w-full text-black leading-[1.0] ${pinyon.className} relative z-20 mb-3 `}
+ style={{ opacity: inv0.opacity, y: inv0.y, scale: inv0.scale, fontSize: '36px' }} 
+ className={`w-full text-[#7A2A39] leading-[1.0] ${pinyon.className} relative z-20 mb-3 `}
  >
  Dear friends and family!
  </motion.h1>
 
  {/* Item 2: Para 1 — fades up */}
  <motion.p 
- style={{ opacity: inv1.opacity, y: inv1.y, fontSize: '16px' }} 
+ style={{ opacity: inv1.opacity, y: inv1.y, fontSize: '20px' }} 
  className={`mb-2 ${cormorant.className} font-medium`}
  >
  Together with our families, we look forward to celebrating a day filled with love, laughter, and cherished memories. We would be delighted to have you join us. 
@@ -385,7 +388,7 @@ export default function EngagementInvite() {
 
 
  {/* ═══ RSVP SECTION ═══ */}
- <section ref={rsvpRef} className="relative w-full py-12 px-4 flex justify-center mb-[45vh] ">
+ <section ref={rsvpRef} className="relative w-full py-8 px-4 flex justify-center mb-[45vh] ">
  <div className="w-full max-w-xl">
  {rsvpSubmitted ? (
  <motion.div
@@ -393,7 +396,7 @@ export default function EngagementInvite() {
  animate={{ opacity: 1, y: 0 }}
  className="text-center"
  >
- <p className={`text-black ${pinyon.className}`} style={{ fontSize: '28px' }}>
+ <p className={`text-[#7A2A39] ${pinyon.className}`} style={{ fontSize: '32px' }}>
  {rsvp === "yes" ? "We can\u0027t wait to see you!" : "We\u0027ll miss you! Thank you for letting us know."}
  </p>
  </motion.div>
@@ -401,8 +404,8 @@ export default function EngagementInvite() {
  <>
  {/* Item 1: Title */}
  <motion.h1 
- style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: '32px' }} 
- className={`text-center text-black mb-3 ${pinyon.className}`}
+ style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: '28px' }} 
+ className={`text-center text-[#7A2A39] mb-2 ${pinyon.className}`}
  >
  Be Our Guest
  </motion.h1>
@@ -410,7 +413,7 @@ export default function EngagementInvite() {
  {/* Item 2: Subtitle */}
  <motion.p 
  style={{ opacity: rsvp1.opacity, y: rsvp1.y, fontSize: '16px' }} 
- className={`text-center mb-6 ${cormorant.className} font-medium`}
+ className={`text-center mb-4 text-[#4A3B32] ${cormorant.className} font-medium`}
  >
  Kindly let us know if you can join our celebration.
  </motion.p>
@@ -418,8 +421,8 @@ export default function EngagementInvite() {
  {/* Item 3: Form */}
  <motion.div style={{ opacity: rsvp2.opacity, y: rsvp2.y }}>
  {/* ── Full Name ── */}
- <label className={`block pl-3 mb-2 ${cormorant.className} font-medium`} style={{ fontSize: '18px' }}>
- Full Name <span className="text-red-400">*</span>
+ <label className={`block pl-3 mb-1 text-[#7A2A39] ${cormorant.className} font-semibold`} style={{ fontSize: '16px' }}>
+ Full Name <span className="text-red-500">*</span>
  </label>
  <input
  id="rsvp-name"
@@ -427,17 +430,17 @@ export default function EngagementInvite() {
  value={rsvpName}
  onChange={(e) => { setRsvpName(e.target.value); if (e.target.value.trim()) setRsvpNameError(false); }}
  placeholder="e.g. Dwij Patel"
- className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none transition-all ${cormorant.className} ${rsvpNameError ? 'ring-2 ring-red-400' : ''}`}
- style={{ fontSize: '18px' }}
+ className={`w-full px-3 py-2 rounded-[10px] bg-white text-[#4A3B32] border border-[#D8A4A4] shadow-sm focus:outline-none focus:border-[#7A2A39] transition-all ${cormorant.className} ${rsvpNameError ? 'ring-2 ring-red-400' : ''}`}
+ style={{ fontSize: '16px' }}
  />
  {rsvpNameError && (
- <p className={`pl-3 mt-1 text-red-400 ${cormorant.className}`} style={{ fontSize: '14px' }}>
+ <p className={`pl-3 mt-1 text-red-500 ${cormorant.className}`} style={{ fontSize: '14px' }}>
  Please enter your full name to continue.
  </p>
  )}
 
  {/* ── Will you attend? ── */}
- <label className={`block pl-3 mt-6 mb-2 ${cormorant.className} font-medium`} style={{ fontSize: '18px' }}>
+ <label className={`block pl-3 mt-4 mb-1 text-[#7A2A39] ${cormorant.className} font-semibold`} style={{ fontSize: '16px' }}>
  Will you be attending?
  </label>
  <div className="grid grid-cols-2 gap-4 ">
@@ -447,12 +450,12 @@ export default function EngagementInvite() {
  whileHover={{ scale: 1.02 }}
  whileTap={{ scale: 0.98 }}
  onClick={() => handleRsvpAttend("yes")}
- className={`py-2 rounded-[10px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
+ className={`py-2 rounded-[10px] cursor-pointer transition-all duration-200 border ${cormorant.className} ${
  rsvp === "yes"
- ? "bg-[#FCD66B] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
- : "bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:bg-[#FCD66B]/50"
+ ? "bg-[#7A2A39] text-[#FCF9F2] border-[#7A2A39] font-bold"
+ : "bg-white text-[#4A3B32] border-[#D8A4A4] hover:border-[#7A2A39]"
  }`}
- style={{ fontSize: '18px' }}
+ style={{ fontSize: '16px' }}
  >
  Yes
  </motion.button>
@@ -462,12 +465,12 @@ export default function EngagementInvite() {
  whileHover={{ scale: 1.02 }}
  whileTap={{ scale: 0.98 }}
  onClick={() => handleRsvpAttend("no")}
- className={`py-2 rounded-[10px] cursor-pointer transition-all duration-200 ${cormorant.className} ${
+ className={`py-2 rounded-[10px] cursor-pointer transition-all duration-200 border ${cormorant.className} ${
  rsvp === "no"
- ? "bg-[#FCD66B] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"
- : "bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] hover:bg-[#FCD66B]/50"
+ ? "bg-[#7A2A39] text-[#FCF9F2] border-[#7A2A39] font-bold"
+ : "bg-white text-[#4A3B32] border-[#D8A4A4] hover:border-[#7A2A39]"
  }`}
- style={{ fontSize: '18px' }}
+ style={{ fontSize: '16px' }}
  >
  No
  </motion.button>
@@ -476,8 +479,8 @@ export default function EngagementInvite() {
  {/* ── If Yes: show guest count then submit ── */}
  {rsvp === "yes" && (
  <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
- <label className={`block pl-3 mt-6 mb-2 ${cormorant.className} font-medium`} style={{ fontSize: '18px' }}>
- How many people will be attending? <span className="text-red-400">*</span>
+ <label className={`block pl-3 mt-4 mb-1 text-[#7A2A39] ${cormorant.className} font-semibold`} style={{ fontSize: '16px' }}>
+ How many people will be attending? <span className="text-red-500">*</span>
  </label>
  <input
  id="rsvp-guests"
@@ -491,15 +494,15 @@ export default function EngagementInvite() {
  }
  }}
  placeholder="e.g. 4"
- className={`w-full px-4 py-2 rounded-[10px] bg-[#FBF7EF] text-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] focus:outline-none transition-all ${cormorant.className} ${rsvpGuestsError ? 'ring-2 ring-red-400' : ''}`}
- style={{ fontSize: '18px' }}
+ className={`w-full px-3 py-2 rounded-[10px] bg-white text-[#4A3B32] border border-[#D8A4A4] shadow-sm focus:outline-none focus:border-[#7A2A39] transition-all ${cormorant.className} ${rsvpGuestsError ? 'ring-2 ring-red-400' : ''}`}
+ style={{ fontSize: '16px' }}
  />
  {rsvpGuestsError && (
- <p className={`pl-3 mt-1 text-red-400 ${cormorant.className}`} style={{ fontSize: '14px' }}>
+ <p className={`pl-3 mt-1 text-red-500 ${cormorant.className}`} style={{ fontSize: '14px' }}>
  Please enter at least 1 guest.
  </p>
  )}
- <div className="flex justify-center mt-10">
+ <div className="flex justify-center mt-6">
  <motion.button
  id="rsvp-submit-yes"
  type="button"
@@ -507,8 +510,8 @@ export default function EngagementInvite() {
  whileTap={{ scale: 0.97 }}
  onClick={handleRsvpSubmit}
  disabled={rsvpLoading}
- className={`px-8 py-2 rounded-[10px] bg-[#FCCBBF] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
- style={{ fontSize: '18px' }}
+ className={`px-6 py-2 rounded-[10px] bg-[#7A2A39] text-[#FCF9F2] font-bold cursor-pointer hover:brightness-110 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+ style={{ fontSize: '16px' }}
  >
  {rsvpLoading ? 'Sending...' : 'Confirm RSVP'}
  </motion.button>
@@ -518,7 +521,7 @@ export default function EngagementInvite() {
 
  {/* ── If No: show submit immediately ── */}
  {rsvp === "no" && (
- <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="flex justify-center mt-10">
+ <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="flex justify-center mt-6">
  <motion.button
  id="rsvp-submit-no"
  type="button"
@@ -526,8 +529,8 @@ export default function EngagementInvite() {
  whileTap={{ scale: 0.97 }}
  onClick={handleRsvpSubmit}
  disabled={rsvpLoading}
- className={`px-8 py-2 rounded-[10px] bg-[#FCCBBF] text-black shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] cursor-pointer hover:brightness-95 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
- style={{ fontSize: '18px' }}
+ className={`px-6 py-2 rounded-[10px] bg-[#7A2A39] text-[#FCF9F2] font-bold cursor-pointer hover:brightness-110 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+ style={{ fontSize: '16px' }}
  >
  {rsvpLoading ? 'Sending...' : 'Confirm RSVP'}
  </motion.button>
