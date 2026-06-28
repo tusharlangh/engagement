@@ -139,7 +139,7 @@ export default function EngagementInvite() {
 
  useEffect(() => {
  const showTimer = setTimeout(() => setShowReminder(true), 2000);
- const hideTimer = setTimeout(() => setShowReminder(false), 12000);
+ const hideTimer = setTimeout(() => setShowReminder(false), 6000);
  return () => {
  clearTimeout(showTimer);
  clearTimeout(hideTimer);
@@ -190,18 +190,18 @@ export default function EngagementInvite() {
  animate={{ opacity: 1, y: 0 }}
  exit={{ opacity: 0, y: -50 }}
  transition={{ duration: 0.5, ease: "easeOut" }}
- className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-[#FBF7EF] px-4 py-2 rounded-[15px] shadow-lg flex items-center gap-3 w-[calc(100%-2rem)] max-w-[360px] ${cormorant.className}`}
- >
- <span className="font-medium text-black text-center flex-1" style={{ fontSize: '16px' }}>
- Please fill out the RSVP below!
- </span>
- <button 
- onClick={() => setShowReminder(false)}
- className="text-black/50 hover:text-black ml-2 text-xl cursor-pointer"
- >
- ✕
- </button>
- </motion.div>
+  className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-[#FBF7EF] py-2 rounded-[15px] shadow-lg flex justify-center items-center w-[calc(100%-2rem)] max-w-[360px] ${cormorant.className}`}
+  >
+  <span className="font-medium text-black text-center" style={{ fontSize: '16px' }}>
+  Please fill out the RSVP below!
+  </span>
+  <button 
+  onClick={() => setShowReminder(false)}
+  className="absolute right-4 text-black/50 hover:text-black text-xl cursor-pointer"
+  >
+  ✕
+  </button>
+  </motion.div>
  )}
  </AnimatePresence>
 
@@ -238,7 +238,7 @@ export default function EngagementInvite() {
  className={`mb-3 ${cormorant.className} font-medium`}
  style={{ fontSize: '18px' }}
  >
- With the blesses of our Families 
+ With the blessings of our Families 
  </motion.p>
  
  <motion.h1 
