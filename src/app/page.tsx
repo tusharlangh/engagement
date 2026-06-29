@@ -46,6 +46,14 @@ function useStaggeredScroll(
 // Replace this URL with your deployed Google Apps Script web app URL
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXkhGWThVfKYQ1_Q1H897_zvjf6sS5JnlriqLo3LbxdU4-Ivg3Qe4ieW_6TEoYndya/exec";
 
+const AmpersandDivider = () => (
+  <div className="flex items-center justify-center opacity-100 pointer-events-none overflow-visible" style={{ minHeight: '100px' }}>
+    
+    <span className={`mx-2 text-[#7A2A39] ${pinyon.className} inline-block overflow-visible`} style={{ fontSize: '72px', lineHeight: '1.6', padding: '8px 24px'}}>&amp;</span>
+    
+  </div>
+);
+
 export default function EngagementInvite() {
  const [rsvp, setRsvp] = useState<"yes" | "no" | null>(null);
  const [rsvpName, setRsvpName] = useState("");
@@ -222,8 +230,9 @@ export default function EngagementInvite() {
 
 
  {/* ═══ SECTION 1: HERO ═══ */}
- <section ref={heroRef} className="relative w-full min-h-[100svh] flex flex-col items-center justify-center px-4 py-12 overflow-hidden">
+ <section ref={heroRef} className="relative w-full min-h-[100svh] flex flex-col items-center justify-center px-4 py-12 overflow-x-hidden">
  <motion.div style={{ y: heroY, opacity: heroOpacity }} className="flex flex-col items-center w-full">
+<div className="mt-20 flex flex-col items-center justify-center">
  <motion.img
  src="/ganpati.png"
  alt="ganpati"
@@ -254,27 +263,74 @@ export default function EngagementInvite() {
  Chhaya <span className={`bg-clip-text mx-2 ${cormorant.className} font-light italic inline-block`} style={{ fontSize: '28px' }}>&amp;</span> Dwij
  </motion.h1>
 
- <motion.p 
+ <motion.div
  initial={{ opacity: 0, y: 30 }} 
  animate={{ opacity: 1, y: 0 }} 
  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
- className={`mb-3 ${cormorant.className} font-medium`}
- style={{ fontSize: '20px' }}
+ className="mt-2 mb-6"
  >
- Are getting engaged On
- </motion.p>
- <motion.p 
+ <p className={`mb-2 ${cormorant.className} font-medium text-[#4A3B32]`} style={{ fontSize: '20px' }}>
+ are getting engaged
+ </p>
+ </motion.div>
+
+ <motion.div
  initial={{ opacity: 0, y: 30 }} 
  animate={{ opacity: 1, y: 0 }} 
  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }} 
- className={`${cormorant.className} font-semibold`}
- style={{ fontSize: '28px' }}
+ className="mb-8"
  >
+ <p className={`my-2 ${cormorant.className} font-semibold text-[#4A3B32]`} style={{ fontSize: '28px' }}>
  July 19th
- </motion.p>
+ </p>
+ </motion.div>
+ </div>
+
+<div className="mt-10">
+ <motion.div 
+ initial={{ opacity: 0, y: 20 }} 
+ animate={{ opacity: 1, y: 0 }} 
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }} 
+ className="flex flex-col items-center justify-center w-full mb-3"
+ >
+ <p className={`text-center ${cormorant.className} font-medium mb-1`} style={{ fontSize: '18px' }}>
+ Beloved Daughter of
+ </p>
+ <p className={`text-center ${cormorant.className} font-medium px-2 text-[#4A3B32]`} style={{ fontSize: '20px' }}>
+ Jagrutiben &amp; Govind Langhnoda
+ </p>
+ </motion.div>
+
+ <motion.div
+ initial={{ opacity: 0, y: 20 }} 
+ animate={{ opacity: 1, y: 0 }} 
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.6 }} 
+ className="overflow-visible"
+ >
+ <div className="flex items-center justify-center pointer-events-none overflow-visible">
+    <span className={`py-1 text-[#7A2A39] ${pinyon.className} overflow-visible`} style={{ fontSize: '30px', display: 'block'}}>and</span>
+  </div>
+ </motion.div>
+
+ <motion.div 
+ initial={{ opacity: 0, y: 20 }} 
+ animate={{ opacity: 1, y: 0 }} 
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.7 }} 
+ className="flex flex-col items-center justify-center w-full mt-3 mb-12"
+ >
+ <p className={`text-center ${cormorant.className} font-medium mb-1`} style={{ fontSize: '18px' }}>
+ Beloved Son of
+ </p>
+ <p className={`text-center ${cormorant.className} font-medium px-2 text-[#4A3B32]`} style={{ fontSize: '20px' }}>
+ Kailashben &amp; Mitesh Patel
+ </p>
+ </motion.div>
+
+ </div>
  </div>
  </motion.div>
  </section>
+ 
  
  {/* ═══ SECTION 2: COUNTDOWN TIMER ═══ */}
  <section ref={countdownRef} className="relative w-full py-12 z-10 px-4 flex justify-center items-center mb-20 ">
@@ -404,7 +460,7 @@ export default function EngagementInvite() {
  <>
  {/* Item 1: Title */}
  <motion.h1 
- style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: '28px' }} 
+ style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: '36px' }} 
  className={`text-center text-[#7A2A39] mb-2 ${pinyon.className}`}
  >
  Be Our Guest
