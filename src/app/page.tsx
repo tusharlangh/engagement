@@ -269,8 +269,18 @@ export default function EngagementInvite() {
  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
  className="mt-2 mb-6"
  >
- <p className={`mb-2 ${cormorant.className} font-medium text-[#4A3B32]`} style={{ fontSize: '20px' }}>
+ <p className={`${cormorant.className} font-medium text-[#4A3B32]`} style={{ fontSize: '20px' }}>
  are getting engaged
+ </p>
+ </motion.div>
+ <motion.div
+ initial={{ opacity: 0, y: 30 }} 
+ animate={{ opacity: 1, y: 0 }} 
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
+ className=""
+ >
+ <p className={`${cormorant.className} font-medium text-[#4A3B32]`} style={{ fontSize: '20px' }}>
+ On
  </p>
  </motion.div>
 
