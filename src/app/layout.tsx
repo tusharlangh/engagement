@@ -15,7 +15,7 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "RSVP Form",
+  title: "Invitation",
   description:
     "Chhaya & Dwij are inviting you to their engagement celebration!",
   icons: {
