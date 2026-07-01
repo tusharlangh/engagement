@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Chhaya & Dwij are inviting you to their engagement celebration!",
   icons: {
-    icon: "/ganpati.png",
+    icon: "/logo.png",
   },
 };
 
