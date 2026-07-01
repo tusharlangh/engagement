@@ -7,5 +7,5 @@
 
 /* Custom utility for the serif body font */
 @utility font-body {
-  font-family: var(--font-cormorant), "Georgia", serif;
+  font-family: var(--font-andada-pro), "Georgia", serif;
 }
