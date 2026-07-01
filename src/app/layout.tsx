@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Great_Vibes } from "next/font/google";
+import { Andada_Pro, Great_Vibes } from "next/font/google";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  weight: ["300", "400", "500", "600", "700"],
+const andadaPro = Andada_Pro({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-cormorant",
+  variable: "--font-andada-pro",
 });
 
 const greatVibes = Great_Vibes({
@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${cormorant.variable} ${greatVibes.variable} font-body antialiased bg-[#FCE4EC] text-[#4A3B32]`}
+        className={`${andadaPro.variable} ${greatVibes.variable} font-body antialiased bg-[#FCE4EC] text-[#FCF9F2]`}
       >
         {children}
       </body>

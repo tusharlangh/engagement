@@ -49,7 +49,7 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXkhGWThVfKY
 const AmpersandDivider = () => (
   <div className="flex items-center justify-center opacity-100 pointer-events-none overflow-visible" style={{ minHeight: '100px' }}>
     
-    <span className={`mx-2 text-[#7A2A39] ${pinyon.className} inline-block overflow-visible`} style={{ fontSize: '72px', lineHeight: '1.6', padding: '8px 24px'}}>&amp;</span>
+    <span className={`mx-2 text-[#FCF9F2] ${pinyon.className} inline-block overflow-visible`} style={{ fontSize: '72px', lineHeight: '1.6', padding: '8px 24px'}}>&amp;</span>
     
   </div>
 );
@@ -187,10 +187,9 @@ export default function EngagementInvite() {
  const rsvp2 = useStaggeredScroll(rsvpProgress, 2, 3, { startOffset: 0.0 });
 
   return (
-    <div className="min-h-screen bg-[#FCE4EC] flex justify-center">
+    <div className="min-h-screen bg-[#7B1C45] flex justify-center">
     <main 
-      className={`w-full max-w-[430px] min-h-screen text-[#4A3B32] ${cormorant.className} overflow-x-hidden selection:text-white selection:bg-[#D8A4A4] relative shadow-[0_0_40px_rgba(0,0,0,0.05)]`}
-      style={{ backgroundImage: 'url(/main_bg.png)', backgroundRepeat: 'repeat', backgroundSize: '280px', backgroundBlendMode: 'multiply' }}
+      className={`w-full max-w-[430px] min-h-screen bg-[#7B1C45] text-[#FCF9F2] ${cormorant.className} overflow-x-hidden selection:text-white selection:bg-[#D8A4A4] relative shadow-[0_0_40px_rgba(0,0,0,0.05)]`}
     >
       {/* Viewport meta is handled by Next.js */}
  {/* ═══ RSVP REMINDER POPUP ═══ */}
@@ -201,17 +200,11 @@ export default function EngagementInvite() {
  animate={{ opacity: 1, y: 0 }}
  exit={{ opacity: 0, y: -50 }}
  transition={{ duration: 0.5, ease: "easeOut" }}
-  className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white border border-[#D8A4A4] py-2 rounded-[15px] shadow-sm flex justify-center items-center w-[calc(100%-2rem)] max-w-[360px] ${cormorant.className}`}
+  className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white border border-[#FCF9F2]/50 py-2 rounded-[15px] shadow-sm flex justify-center items-center w-[calc(100%-2rem)] max-w-[360px] ${cormorant.className}`}
   >
-  <span className="font-medium text-[#8C3F4D] text-center" style={{ fontSize: '16px' }}>
+  <span className="font-medium text-[#7B1C45] text-center" style={{ fontSize: '24px' }}>
   Please fill out the RSVP below!
   </span>
-  <button 
-  onClick={() => setShowReminder(false)}
-  className="absolute right-4 text-[#4A3B32]/50 hover:text-[#4A3B32] text-xl cursor-pointer"
-  >
-  ✕
-  </button>
   </motion.div>
  )}
  </AnimatePresence>
@@ -228,114 +221,99 @@ export default function EngagementInvite() {
  className="absolute bottom-0 left-0 w-full h-auto pointer-events-none"
  />
 
-
  {/* ═══ SECTION 1: HERO ═══ */}
  <section ref={heroRef} className="relative w-full min-h-[100svh] flex flex-col items-center justify-center px-4 py-12 overflow-x-hidden">
  <motion.div style={{ y: heroY, opacity: heroOpacity }} className="flex flex-col items-center w-full">
-<div className="mt-20 flex flex-col items-center justify-center">
+ <div className="mt-32 flex flex-col items-center justify-center">
  <motion.img
  src="/ganpati.png"
  alt="ganpati"
- className="mt-4 h-14 pointer-events-none"
+ className="mt-4 h-20 pointer-events-none opacity-80"
  animate={{ y: [0, -10, 0] }}
  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
  />
 
- <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center justify-center text-center mt-4">
+ <div className="relative z-10 w-full max-w-[320px] mx-auto flex flex-col items-center justify-center text-center mt-4 px-4">
  
- <motion.p 
- initial={{ opacity: 0, y: 30 }} 
- animate={{ opacity: 1, y: 0 }} 
- transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }} 
- className={`mb-3 ${cormorant.className} font-medium`}
- style={{ fontSize: '20px' }}
- >
- With the blessings of our Families 
- </motion.p>
- 
- <motion.h1 
+ {/* Beloved Daughter of */}
+ <motion.div 
  initial={{ opacity: 0, y: 30 }} 
  animate={{ opacity: 1, y: 0 }} 
  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }} 
- className={`text-[#7A2A39] leading-[1.0] mb-3 ${pinyon.className} relative z-20 py-2 px-2`}
- style={{ fontSize: '48px' }}
+ className="flex flex-col items-center justify-center w-full mb-6"
  >
- Chhaya <span className={`bg-clip-text mx-2 ${cormorant.className} font-light italic inline-block`} style={{ fontSize: '28px' }}>&amp;</span> Dwij
- </motion.h1>
-
- <motion.div
- initial={{ opacity: 0, y: 30 }} 
- animate={{ opacity: 1, y: 0 }} 
- transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
- className="mt-2 mb-6"
- >
- <p className={`${cormorant.className} font-medium text-[#4A3B32]`} style={{ fontSize: '20px' }}>
- are getting engaged
- </p>
- </motion.div>
- <motion.div
- initial={{ opacity: 0, y: 30 }} 
- animate={{ opacity: 1, y: 0 }} 
- transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
- className=""
- >
- <p className={`${cormorant.className} font-medium text-[#4A3B32]`} style={{ fontSize: '20px' }}>
- On
- </p>
- </motion.div>
-
- <motion.div
- initial={{ opacity: 0, y: 30 }} 
- animate={{ opacity: 1, y: 0 }} 
- transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }} 
- className="mb-8"
- >
- <p className={`my-2 ${cormorant.className} font-semibold text-[#4A3B32]`} style={{ fontSize: '28px' }}>
- July 19th
- </p>
- </motion.div>
- </div>
-
-<div className="mt-10">
- <motion.div 
- initial={{ opacity: 0, y: 20 }} 
- animate={{ opacity: 1, y: 0 }} 
- transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }} 
- className="flex flex-col items-center justify-center w-full mb-3"
- >
- <p className={`text-center ${cormorant.className} font-medium mb-1`} style={{ fontSize: '18px' }}>
+ <p className={`text-center ${cormorant.className} font-medium mb-1 text-[#D8A4A4]`} style={{ fontSize: '20px' }}>
  Beloved Daughter of
  </p>
- <p className={`text-center ${cormorant.className} font-medium px-2 text-[#4A3B32]`} style={{ fontSize: '20px' }}>
+ <p className={`text-center ${cormorant.className} font-medium px-2 text-[#FCF9F2]`} style={{ fontSize: '20px' }}>
  Jagrutiben &amp; Govind Langhnoda
  </p>
  </motion.div>
-
- <motion.div
- initial={{ opacity: 0, y: 20 }} 
+ 
+ {/* Chhaya & Dwij */}
+ <motion.h1 
+ initial={{ opacity: 0, y: 30 }} 
  animate={{ opacity: 1, y: 0 }} 
- transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.6 }} 
- className="overflow-visible"
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }} 
+ className={`text-[#E8B25E] leading-[1.2] flex flex-col items-center justify-center mb-6 ${pinyon.className} relative z-20 py-2 px-1`}
+ style={{ fontSize: '46px' }}
  >
- <div className="flex items-center justify-center pointer-events-none overflow-visible">
-    <span className={`py-1 text-[#7A2A39] ${pinyon.className} overflow-visible`} style={{ fontSize: '30px', display: 'block'}}>and</span>
-  </div>
- </motion.div>
+ <span>Chhaya</span>
+ <span className={`bg-clip-text mx-1 ${cormorant.className} font-medium italic text-[#D8A4A4] inline-block`} style={{ fontSize: '36px' }}>&amp;</span>
+ <span>Dwij</span>
+ </motion.h1>
 
+ {/* Beloved Son of */}
  <motion.div 
- initial={{ opacity: 0, y: 20 }} 
+ initial={{ opacity: 0, y: 30 }} 
  animate={{ opacity: 1, y: 0 }} 
- transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.7 }} 
- className="flex flex-col items-center justify-center w-full mt-3 mb-12"
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }} 
+ className="flex flex-col items-center justify-center w-full mb-8"
  >
- <p className={`text-center ${cormorant.className} font-medium mb-1`} style={{ fontSize: '18px' }}>
+ <p className={`text-center ${cormorant.className} font-medium mb-1 text-[#D8A4A4]`} style={{ fontSize: '20px' }}>
  Beloved Son of
  </p>
- <p className={`text-center ${cormorant.className} font-medium px-2 text-[#4A3B32]`} style={{ fontSize: '20px' }}>
+ <p className={`text-center ${cormorant.className} font-medium px-2 text-[#FCF9F2]`} style={{ fontSize: '20px' }}>
  Kailashben &amp; Mitesh Patel
  </p>
  </motion.div>
 
+ {/* are getting engaged */}
+ <motion.div
+ initial={{ opacity: 0, y: 30 }} 
+ animate={{ opacity: 1, y: 0 }} 
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.4 }} 
+ className="mb-4"
+ >
+ <p className={`${cormorant.className} font-medium text-[#D8A4A4]`} style={{ fontSize: '20px' }}>
+ are getting engaged
+ </p>
+ </motion.div>
+
+ {/* On */}
+ <motion.div
+ initial={{ opacity: 0, y: 30 }} 
+ animate={{ opacity: 1, y: 0 }} 
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }} 
+ className=""
+ >
+ <p className={`${cormorant.className} font-medium text-[#D8A4A4]`} style={{ fontSize: '20px' }}>
+ On
+ </p>
+ </motion.div>
+
+ {/* July 19th */}
+ <motion.div
+ initial={{ opacity: 0, y: 30 }} 
+ animate={{ opacity: 1, y: 0 }} 
+ transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.6 }} 
+ className="mb-8"
+ >
+ <p className={`my-2 ${cormorant.className} font-bold text-[#E8B25E]`} style={{ fontSize: '30px' }}>
+ July 19th
+ </p>
+ </motion.div>
+ 
  </div>
  </div>
  </motion.div>
@@ -343,43 +321,55 @@ export default function EngagementInvite() {
  
  
  {/* ═══ SECTION 2: COUNTDOWN TIMER ═══ */}
- <section ref={countdownRef} className="relative w-full py-12 z-10 px-4 flex justify-center items-center mb-20 ">
+ <section ref={countdownRef} className="relative w-full py-16 z-10 px-4 flex justify-center items-center mb-24 ">
  <div className="w-full flex justify-center">
  <div className="w-full max-w-[420px] flex flex-col">
  <div className="pt-2 pb-8 px-4 flex flex-col items-center text-center">
  
  {/* Item 1: Countdown Numbers — fades up */}
  <motion.div style={{ opacity: cd0.opacity, y: cd0.y, scale: cd0.scale }} className="flex flex-col items-center w-full mb-16">
- <div className="flex items-center justify-between w-full max-w-[280px] text-[#4A3B32] font-normal tracking-wide font-serif" style={{ fontSize: '32px' }}>
- <span className="w-12 text-center tabular-nums">{String(timeLeft.days).padStart(2, "0")}</span>
- <span className="text-[#4A3B32] select-none pb-2">:</span>
- <span className="w-10 text-center tabular-nums">{String(timeLeft.hours).padStart(2, "0")}</span>
- <span className="text-[#4A3B32] select-none pb-2">:</span>
- <span className="w-10 text-center tabular-nums">{String(timeLeft.minutes).padStart(2, "0")}</span>
- <span className="text-[#4A3B32] select-none pb-2">:</span>
- <span className="w-10 text-center tabular-nums">{String(timeLeft.seconds).padStart(2, "0")}</span>
- </div>
- <div className="flex justify-between w-full max-w-[280px] font-medium text-[#4A3B32]/90 px-1 mt-1" style={{ fontSize: '14px' }}>
- <span className="w-12 text-center">Days</span>
- <span className="w-10 text-center">Hours</span>
- <span className="w-10 text-center">Minutes</span>
- <span className="w-10 text-center">Seconds</span>
+ <div className="flex items-start justify-center w-full max-w-[340px] mx-auto">
+  <div className="flex flex-col items-center w-[72px]">
+   <span className="text-[#E8B25E] font-serif tabular-nums font-medium tracking-wide" style={{ fontSize: '42px' }}>{String(timeLeft.days).padStart(2, "0")}</span>
+   <span className="text-[#D8A4A4]/90 font-medium mt-1" style={{ fontSize: '20px' }}>Days</span>
+  </div>
+  
+  <div className="text-[#FCF9F2] select-none font-serif px-1 -mt-1" style={{ fontSize: '38px' }}>:</div>
+
+  <div className="flex flex-col items-center w-[72px]">
+   <span className="text-[#E8B25E] font-serif tabular-nums font-medium tracking-wide" style={{ fontSize: '42px' }}>{String(timeLeft.hours).padStart(2, "0")}</span>
+   <span className="text-[#D8A4A4]/90 font-medium mt-1" style={{ fontSize: '20px' }}>Hours</span>
+  </div>
+  
+  <div className="text-[#FCF9F2] select-none font-serif px-1 -mt-1" style={{ fontSize: '38px' }}>:</div>
+
+  <div className="flex flex-col items-center w-[72px]">
+   <span className="text-[#E8B25E] font-serif tabular-nums font-medium tracking-wide" style={{ fontSize: '42px' }}>{String(timeLeft.minutes).padStart(2, "0")}</span>
+   <span className="text-[#D8A4A4]/90 font-medium mt-1" style={{ fontSize: '20px' }}>Mins</span>
+  </div>
+  
+  <div className="text-[#FCF9F2] select-none font-serif px-1 -mt-1" style={{ fontSize: '38px' }}>:</div>
+
+  <div className="flex flex-col items-center w-[72px]">
+   <span className="text-[#E8B25E] font-serif tabular-nums font-medium tracking-wide" style={{ fontSize: '42px' }}>{String(timeLeft.seconds).padStart(2, "0")}</span>
+   <span className="text-[#D8A4A4]/90 font-medium mt-1" style={{ fontSize: '20px' }}>Secs</span>
+  </div>
  </div>
  </motion.div>
 
  {/* Item 2: "Where is it?" heading — fades up */}
  <motion.div style={{ opacity: cd1.opacity, y: cd1.y, scale: cd1.scale }}>
- <h1 className={`text-[#7A2A39] leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2`} style={{ fontSize: '36px' }}>
+ <h1 className={`text-[#E8B25E] leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-6`} style={{ fontSize: '42px' }}>
  Where is it?
  </h1>
  </motion.div>
 
  {/* Item 3: Address + Directions button — fades up */}
  <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }}>
- <p className={`${cormorant.className} font-medium`} style={{ fontSize: '20px' }}>
+ <p className={`${cormorant.className} font-medium`} style={{ fontSize: '24px' }}>
  Beaumont Community Centre
  </p>
- <p className={`mb-6 ${cormorant.className} font-medium`} style={{ fontSize: '20px' }}>
+ <p className={`mb-4 ${cormorant.className} font-medium`} style={{ fontSize: '24px' }}>
  5204 50 Ave, Beaumont, AB T4X 1E3
  </p>
  <motion.a
@@ -388,8 +378,8 @@ export default function EngagementInvite() {
  rel="noopener noreferrer"
  whileHover={{ scale: 1.03 }}
  whileTap={{ scale: 0.97 }}
- className={`block mt-4 text-center cursor-pointer bg-[#7A2A39] text-[#FCF9F2] ${cormorant.className} font-bold py-2 px-4 rounded-[10px] mx-6 hover:brightness-110 transition-all`}
- style={{ fontSize: '16px' }}
+ className={`block mt-6 text-center cursor-pointer bg-[#FCF9F2] text-[#7B1C45] ${cormorant.className} font-bold py-2 px-4 rounded-[10px] mx-6 hover:brightness-110 transition-all`}
+ style={{ fontSize: '24px' }}
  >
  Get Directions
  </motion.a>
@@ -397,16 +387,31 @@ export default function EngagementInvite() {
 
 
  <motion.div style={{ opacity: cd1.opacity, y: cd1.y, scale: cd1.scale }}>
- <h1 className={`text-[#7A2A39] leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-2 mt-12 `} style={{ fontSize: '36px' }}>
- When is it?
+ <h1 className={`text-[#E8B25E] leading-[1.0] ${pinyon.className} relative z-20 px-2 mb-8 mt-16 `} style={{ fontSize: '42px' }}>
+ Timeline
  </h1>
  </motion.div>
 
- {/* Item 3: Address + Directions button — fades up */}
- <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }} className="">
- <p className={`${cormorant.className} font-medium`} style={{ fontSize: '20px' }}>
- From <span className="font-bold">9:00 am to 1:00 pm</span>
+ <motion.div style={{ opacity: cd2.opacity, y: cd2.y, scale: cd2.scale }} className="flex flex-col items-center gap-8 text-center">
+ <div className="flex flex-col items-center leading-snug">
+  <span className="font-bold text-[#E8B25E]" style={{ fontSize: '24px' }}>9:00 am - 10:00 am</span>
+  <span className={`${cormorant.className} font-medium text-[#FCF9F2]`} style={{ fontSize: '22px' }}>Sangeet</span>
+  <p className={`${cormorant.className} font-semibold text-[#D8A4A4] italic mt-2 px-2`} style={{ fontSize: '24px' }}>
+  Light snacks and tea will be served between Sangeet
  </p>
+ </div>
+ <div className="flex flex-col items-center leading-snug">
+  <span className="font-bold text-[#E8B25E]" style={{ fontSize: '24px' }}>10:00 am - 10:30 am</span>
+  <span className={`${cormorant.className} font-medium text-[#FCF9F2]`} style={{ fontSize: '22px' }}>Groom and bride entry</span>
+ </div>
+ <div className="flex flex-col items-center leading-snug">
+  <span className="font-bold text-[#E8B25E]" style={{ fontSize: '24px' }}>10:30 am - 11:30 am</span>
+  <span className={`${cormorant.className} font-medium text-[#FCF9F2]`} style={{ fontSize: '22px' }}>Engagement ceremony</span>
+ </div>
+ <div className="flex flex-col items-center leading-snug">
+  <span className="font-bold text-[#E8B25E]" style={{ fontSize: '24px' }}>12:00 pm - 1:00 pm</span>
+  <span className={`${cormorant.className} font-medium text-[#FCF9F2]`} style={{ fontSize: '22px' }}>Food</span>
+ </div>
  </motion.div>
  </div>
  </div>
@@ -414,23 +419,23 @@ export default function EngagementInvite() {
  </section>
 
  {/* ═══ SECTION 3: INVITE ═══ */}
- <section ref={inviteRef} className="relative w-full py-12 z-10 px-4 flex justify-center items-center mb-20 ">
+ <section ref={inviteRef} className="relative w-full py-16 z-10 px-4 flex justify-center items-center mb-24 ">
  <div className="w-full flex justify-center">
  <div className="w-full flex flex-col">
 
  <div className="pt-2 flex flex-col items-center text-center">
  {/* Item 1: Heading — fades up */}
  <motion.h1 
- style={{ opacity: inv0.opacity, y: inv0.y, scale: inv0.scale, fontSize: '36px' }} 
- className={`w-full text-[#7A2A39] leading-[1.0] ${pinyon.className} relative z-20 mb-3 `}
+ style={{ opacity: inv0.opacity, y: inv0.y, scale: inv0.scale, fontSize: '42px' }} 
+ className={`w-full text-[#E8B25E] leading-[1.0] ${pinyon.className} relative z-20 mb-6 `}
  >
  Dear friends and family!
  </motion.h1>
 
  {/* Item 2: Para 1 — fades up */}
  <motion.p 
- style={{ opacity: inv1.opacity, y: inv1.y, fontSize: '20px' }} 
- className={`mb-2 ${cormorant.className} font-medium`}
+ style={{ opacity: inv1.opacity, y: inv1.y, fontSize: '24px' }} 
+ className={`mb-6 ${cormorant.className} font-medium`}
  >
  Together with our families, we look forward to celebrating a day filled with love, laughter, and cherished memories. We would be delighted to have you join us. 
  </motion.p>
@@ -439,7 +444,7 @@ export default function EngagementInvite() {
  {/* Item 3: Image — fades up */}
  <motion.div 
  style={{ opacity: inv2.opacity, y: inv2.y, scale: inv2.scale }} 
- className="w-full mx-auto flex justify-center mt-10 "
+ className="w-full mx-auto flex justify-center mt-12 "
  >
  <img
  src="/eng2.jpeg"
@@ -454,7 +459,20 @@ export default function EngagementInvite() {
 
 
  {/* ═══ RSVP SECTION ═══ */}
- <section ref={rsvpRef} className="relative w-full py-8 px-4 flex justify-center mb-[45vh] ">
+ <section ref={rsvpRef} className="relative w-full py-16 px-4 flex flex-col items-center justify-center mb-[45vh] ">
+ 
+ <motion.div 
+   initial={{ opacity: 0, y: 20 }} 
+   whileInView={{ opacity: 1, y: 0 }} 
+   viewport={{ once: true, margin: "-50px" }}
+   transition={{ duration: 0.8, ease: "easeOut" }}
+   className="text-center mb-16 w-full max-w-md px-2"
+ >
+   <p className={`text-[#E8B25E] ${cormorant.className} font-bold`} style={{ fontSize: '28px' }}>
+     No Gifts Please, Your Presence is the Biggest Gift!
+   </p>
+ </motion.div>
+
  <div className="w-full max-w-xl">
  {rsvpSubmitted ? (
  <motion.div
@@ -462,7 +480,7 @@ export default function EngagementInvite() {
  animate={{ opacity: 1, y: 0 }}
  className="text-center"
  >
- <p className={`text-[#7A2A39] ${pinyon.className}`} style={{ fontSize: '32px' }}>
+ <p className={`text-[#FCF9F2] ${pinyon.className}`} style={{ fontSize: '42px' }}>
  {rsvp === "yes" ? "We can\u0027t wait to see you!" : "We\u0027ll miss you! Thank you for letting us know."}
  </p>
  </motion.div>
@@ -470,16 +488,16 @@ export default function EngagementInvite() {
  <>
  {/* Item 1: Title */}
  <motion.h1 
- style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: '36px' }} 
- className={`text-center text-[#7A2A39] mb-2 ${pinyon.className}`}
+ style={{ opacity: rsvp0.opacity, y: rsvp0.y, scale: rsvp0.scale, fontSize: '42px' }} 
+ className={`text-center text-[#E8B25E] mb-4 ${pinyon.className}`}
  >
  Be Our Guest
  </motion.h1>
 
  {/* Item 2: Subtitle */}
  <motion.p 
- style={{ opacity: rsvp1.opacity, y: rsvp1.y, fontSize: '16px' }} 
- className={`text-center mb-4 text-[#4A3B32] ${cormorant.className} font-medium`}
+ style={{ opacity: rsvp1.opacity, y: rsvp1.y, fontSize: '24px' }} 
+ className={`text-center mb-10 text-[#D8A4A4] ${cormorant.className} font-medium`}
  >
  Kindly let us know if you can join our celebration.
  </motion.p>
@@ -487,7 +505,7 @@ export default function EngagementInvite() {
  {/* Item 3: Form */}
  <motion.div style={{ opacity: rsvp2.opacity, y: rsvp2.y }}>
  {/* ── Full Name ── */}
- <label className={`block pl-3 mb-1 text-[#7A2A39] ${cormorant.className} font-semibold`} style={{ fontSize: '16px' }}>
+ <label className={`block pl-3 mb-2 text-[#E8B25E] ${cormorant.className} font-semibold`} style={{ fontSize: '24px' }}>
  Full Name <span className="text-red-500">*</span>
  </label>
  <input
@@ -496,17 +514,17 @@ export default function EngagementInvite() {
  value={rsvpName}
  onChange={(e) => { setRsvpName(e.target.value); if (e.target.value.trim()) setRsvpNameError(false); }}
  placeholder="e.g. Dwij Patel"
- className={`w-full px-3 py-2 rounded-[10px] bg-white text-[#4A3B32] border border-[#D8A4A4] shadow-sm focus:outline-none focus:border-[#7A2A39] transition-all ${cormorant.className} ${rsvpNameError ? 'ring-2 ring-red-400' : ''}`}
- style={{ fontSize: '16px' }}
+ className={`w-full px-3 py-2 rounded-[10px] bg-white text-[#7B1C45] border border-[#FCF9F2]/50 shadow-sm focus:outline-none focus:border-[#FCF9F2] transition-all ${cormorant.className} ${rsvpNameError ? 'ring-2 ring-red-400' : ''}`}
+ style={{ fontSize: '24px' }}
  />
  {rsvpNameError && (
- <p className={`pl-3 mt-1 text-red-500 ${cormorant.className}`} style={{ fontSize: '14px' }}>
+ <p className={`pl-3 mt-1 text-red-500 ${cormorant.className}`} style={{ fontSize: '24px' }}>
  Please enter your full name to continue.
  </p>
  )}
 
  {/* ── Will you attend? ── */}
- <label className={`block pl-3 mt-4 mb-1 text-[#7A2A39] ${cormorant.className} font-semibold`} style={{ fontSize: '16px' }}>
+ <label className={`block pl-3 mt-8 mb-2 text-[#E8B25E] ${cormorant.className} font-semibold`} style={{ fontSize: '24px' }}>
  Will you be attending?
  </label>
  <div className="grid grid-cols-2 gap-4 ">
@@ -518,10 +536,10 @@ export default function EngagementInvite() {
  onClick={() => handleRsvpAttend("yes")}
  className={`py-2 rounded-[10px] cursor-pointer transition-all duration-200 border ${cormorant.className} ${
  rsvp === "yes"
- ? "bg-[#7A2A39] text-[#FCF9F2] border-[#7A2A39] font-bold"
- : "bg-white text-[#4A3B32] border-[#D8A4A4] hover:border-[#7A2A39]"
+ ? "bg-[#E8B25E] text-[#7B1C45] border-[#E8B25E] font-bold shadow-md"
+ : "bg-white text-[#7B1C45] border-[#FCF9F2]/50 hover:border-[#E8B25E]"
  }`}
- style={{ fontSize: '16px' }}
+ style={{ fontSize: '24px' }}
  >
  Yes
  </motion.button>
@@ -533,10 +551,10 @@ export default function EngagementInvite() {
  onClick={() => handleRsvpAttend("no")}
  className={`py-2 rounded-[10px] cursor-pointer transition-all duration-200 border ${cormorant.className} ${
  rsvp === "no"
- ? "bg-[#7A2A39] text-[#FCF9F2] border-[#7A2A39] font-bold"
- : "bg-white text-[#4A3B32] border-[#D8A4A4] hover:border-[#7A2A39]"
+ ? "bg-[#E8B25E] text-[#7B1C45] border-[#E8B25E] font-bold shadow-md"
+ : "bg-white text-[#7B1C45] border-[#FCF9F2]/50 hover:border-[#E8B25E]"
  }`}
- style={{ fontSize: '16px' }}
+ style={{ fontSize: '24px' }}
  >
  No
  </motion.button>
@@ -545,7 +563,7 @@ export default function EngagementInvite() {
  {/* ── If Yes: show guest count then submit ── */}
  {rsvp === "yes" && (
  <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
- <label className={`block pl-3 mt-4 mb-1 text-[#7A2A39] ${cormorant.className} font-semibold`} style={{ fontSize: '16px' }}>
+ <label className={`block pl-3 mt-8 mb-2 text-[#E8B25E] ${cormorant.className} font-semibold`} style={{ fontSize: '24px' }}>
  How many people will be attending? <span className="text-red-500">*</span>
  </label>
  <input
@@ -560,11 +578,11 @@ export default function EngagementInvite() {
  }
  }}
  placeholder="e.g. 4"
- className={`w-full px-3 py-2 rounded-[10px] bg-white text-[#4A3B32] border border-[#D8A4A4] shadow-sm focus:outline-none focus:border-[#7A2A39] transition-all ${cormorant.className} ${rsvpGuestsError ? 'ring-2 ring-red-400' : ''}`}
- style={{ fontSize: '16px' }}
+ className={`w-full px-3 py-2 rounded-[10px] bg-white text-[#7B1C45] border border-[#FCF9F2]/50 shadow-sm focus:outline-none focus:border-[#FCF9F2] transition-all ${cormorant.className} ${rsvpGuestsError ? 'ring-2 ring-red-400' : ''}`}
+ style={{ fontSize: '24px' }}
  />
  {rsvpGuestsError && (
- <p className={`pl-3 mt-1 text-red-500 ${cormorant.className}`} style={{ fontSize: '14px' }}>
+ <p className={`pl-3 mt-1 text-red-500 ${cormorant.className}`} style={{ fontSize: '24px' }}>
  Please enter at least 1 guest.
  </p>
  )}
@@ -576,8 +594,8 @@ export default function EngagementInvite() {
  whileTap={{ scale: 0.97 }}
  onClick={handleRsvpSubmit}
  disabled={rsvpLoading}
- className={`px-6 py-2 rounded-[10px] bg-[#7A2A39] text-[#FCF9F2] font-bold cursor-pointer hover:brightness-110 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
- style={{ fontSize: '16px' }}
+ className={`px-6 py-2 rounded-[10px] bg-[#FCF9F2] text-[#7B1C45] font-bold cursor-pointer hover:brightness-110 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+ style={{ fontSize: '24px' }}
  >
  {rsvpLoading ? 'Sending...' : 'Confirm RSVP'}
  </motion.button>
@@ -595,8 +613,8 @@ export default function EngagementInvite() {
  whileTap={{ scale: 0.97 }}
  onClick={handleRsvpSubmit}
  disabled={rsvpLoading}
- className={`px-6 py-2 rounded-[10px] bg-[#7A2A39] text-[#FCF9F2] font-bold cursor-pointer hover:brightness-110 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
- style={{ fontSize: '16px' }}
+ className={`px-6 py-2 rounded-[10px] bg-[#FCF9F2] text-[#7B1C45] font-bold cursor-pointer hover:brightness-110 transition-all ${cormorant.className} ${rsvpLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+ style={{ fontSize: '24px' }}
  >
  {rsvpLoading ? 'Sending...' : 'Confirm RSVP'}
  </motion.button>
@@ -608,7 +626,7 @@ export default function EngagementInvite() {
  initial={{ opacity: 0 }}
  animate={{ opacity: 1 }}
  className={`text-center mt-4 text-red-400 ${cormorant.className}`}
- style={{ fontSize: '14px' }}
+ style={{ fontSize: '24px' }}
  >
  Something went wrong. Please try again.
  </motion.p>
